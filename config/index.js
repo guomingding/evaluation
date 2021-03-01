@@ -5,12 +5,21 @@
 const path = require('path')
 
 module.exports = {
+
   dev: {
 
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    /*self added*/
+    proxyTable: {
+        '/api': {
+          target: 'http://localhost:8080', // 要访问的IP地址
+          // 目标
+          pathRewrite: {'^/api': '80'},
+          changeOrigin: true ,   // 开启代理
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
