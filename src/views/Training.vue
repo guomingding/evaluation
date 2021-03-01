@@ -37,7 +37,7 @@ export default {
   },
   methods:{
     toTraining(){
-      this.$router.push('/training')
+      this.$router.push('/survey')
     }
   }
 }
