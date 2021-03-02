@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, jsonify, send_from_directory,json
-from flask_cors import CORS 
+# from flask_cors import CORS 
 import os
 
 app = Flask(__name__, static_folder='../dist/static',
