@@ -4,6 +4,7 @@ import router from './router'
 import Element from 'element-ui'
 import axios from 'axios'
 import qs from 'qs'
+import store from './store'
 
 Vue.use(Element)
 
@@ -16,5 +17,6 @@ Vue.prototype.$qs = qs
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 })

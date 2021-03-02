@@ -1,6 +1,6 @@
 <template>
-  <div class="training">
-      <h1>Traing Task</h1>
+  <div class="visualization">
+      <h1>visualization Condition</h1>
       <p>This Vega program creates a basic bar chart. Mousing over the bars shows a tooltip with the bar value. </p>
       
       <p>For this task you will be asked a series of questions about the behavior of the code.
@@ -29,52 +29,63 @@
              When you feel you have sufficiently explored the visualization and are ready to continue to the next step, press ‘Submit’. 
         </p>
 
-        <h3>1. What is the name of the primary dataset being visualized? </h3>
+        <h3>1. What is the name of the primary dataset being visualized? <span style="color:orange">*</span></h3>
             <p style="color:gray">school year and/or position (e.g. 2nd year PhD student, faculty, etc.)</p>
-        <input type="text" class="inputBox" v-bind:disabled="!isStart" v-model="answers[0]"/> <br>
+        <input type="text" class="inputBox" tag = "mustAns" v-bind:disabled="!isStart" v-model="answers[0]" @input="inputAns"/> <br>
 
-        <h3>2. What is the name of the primary dataset being visualized? </h3>
+        <h3>2. What is the name of the primary dataset being visualized? <span style="color:orange">*</span></h3>
             <p style="color:gray">school year and/or position (e.g. 2nd year PhD student, faculty, etc.)</p>
-        <input type="text" class="inputBox"  v-bind:disabled="!isStart" v-model="answers[1]"/> <br>
+        <input type="text" class="inputBox" tag = "mustAns" v-bind:disabled="!isStart" v-model="answers[1]" @input="inputAns"/> <br>
 
-        <h3>3. What is the name of the primary dataset being visualized? </h3>
+        <h3>3. What is the name of the primary dataset being visualized? <span style="color:orange">*</span></h3>
             <p style="color:gray">school year and/or position (e.g. 2nd year PhD student, faculty, etc.)</p>
-        <input type="text" class="inputBox"  v-bind:disabled="!isStart" v-model="answers[2]"/> <br> <br>
+        <input type="text" class="inputBox" tag = "mustAns" v-bind:disabled="!isStart" v-model="answers[2]" @input="inputAns"/> <br> <br>
 
         <el-row>
-            <el-button round class="trainingBtn" style="background-color:purple" @click="parsePage">Parse</el-button>
-            <el-button round class="trainingBtn" style="background-color:green" @click="next">Next</el-button>
+            <el-button round class="visualizationBtn" style="background-color:purple" @click="parsePage">Parse</el-button>
+            <el-button round class="visualizationBtn" style="background-color:green" :disabled="!allowSubmit" @click="submit">Submit</el-button>
         </el-row>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'Training',
+import {judgeAllowSubmit} from '@/assets/js/utils.js'
+export default { 
+  name: 'Visualization',
   data () {
     return {
-      isStart:false,
-      answers:new Array(3)
+      isStart:true,
+      answers:Array.from(new Array(3+1),(v,k) => ''),
+      allowSubmit:false
     }
   },
   methods:{
     parsePage(){
         this.$router.go(0)
     },
-    next(){
+    inputAns(){
+      this.allowSubmit = judgeAllowSubmit(this.answers)
+    },
+    submit(){
+        this.answers[this.answers.length - 1] = new Date().getTime() - this.startTime
+        this.$store.commit('setVisualization',this.answers)
+        console.log(this.$store.state.baseline1)
         if(this.$store.state.url === '/instructions1'){
-          this.$router.push('/baseline1') 
+            this.$router.push('/survey')
         }else{
-          this.$router.push('/vis_training')
+            this.$router.push('/baseline1')
         }
     },
+  },
+  mounted(){
+    this.startTime = new Date().getTime()
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .training{
+  .visualization{
     margin-left: 20%;
     margin-right: 20%;
   }
@@ -97,7 +108,7 @@ export default {
     border-bottom-width: 2px;
     border-style: solid;
   }
-  .trainingBtn{
+  .visualizationBtn{
     height: 2em;
     width: 4em;
     font-size: 1em;

@@ -6,13 +6,19 @@ app = Flask(__name__, static_folder='../dist/static',
             template_folder='../dist')
 CORS(app, supports_credentials=True)  
 
-
+records1 = []
+records2 = []
 @app.route('/api/getSurvey', methods=['post'])
 def getData():
-    jsonData = json.dumps(request.form)
-
-    with open('./backend/data/data.json','a') as f:
-        json.dump(request.form,f)
+    print(json.loads(json.dumps(request.form))['group'])
+    if json.loads(json.dumps(request.form))['group'] == '/instructions1':
+        records1.append(request.form)
+        with open('./backend/data/group1/data.json','w') as f:
+            json.dump(records1,f)
+    else:
+        records2.append(request.form)
+        with open('./backend/data/group2/data.json','w') as f:
+            json.dump(records2,f)
     return ''
 
 if __name__ == '__main__':

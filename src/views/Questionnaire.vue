@@ -1,196 +1,79 @@
 <template>
-  <div class="questions">
-    <h1>Post­Task Survey</h1>
-    <p>You have now completed all the tasks for this study. Please complete the following survey about your experience with the programming environment and code visualizations. </p>
-    <p style="color:orange">* Required</p>
-    <h3 id="q1">1. How quickly were you able to answer the task questions? *</h3>
-    <p>Mark only one oval.</p>
-    <hr />
-    <my-radio :choices="radio1" class="radios">
-      <p slot="left">Quicker with unedited <br>code</p>
-      <p slot="right">Quicker with unedited<br>code</p>
-    </my-radio>
-    <hr />
+  <div class="questionnaire">
+      <h1>Questionnaire</h1>
+      <p>This Vega program creates a basic bar chart. Mousing over the bars shows a tooltip with the bar value. </p>
+      
+      <p>For this task you will be asked a series of questions about the behavior of the code.
+           Please answer the questions as quickly and completely as possible. 
+           Once you have submitted an answer, you will not be able to go back and change it; 
+           if at some point you feel that one of your previous answers was wrong, 
+           please provide your new answer along with an explanation in the text box for the current question 
+           <span style="color:orange">*</span>in addition<span style="color:orange">*</span> to your answer for the current question. </p>
 
-    <h3 id="q2">2. How quickly were you able to answer the task questions? *</h3>
-    <p>Mark only one oval.</p>
-    <hr />
-    <my-radio :choices="radio1" class="radios">
-      <p slot="left">Quicker with unedited <br>code</p>
-      <p slot="right">Quicker with unedited<br>code</p>
-    </my-radio>
-    <hr />
+        <p>You are free to interact with the Vega visualization and code visualizations as much as you would like for each question, 
+            but you cannot change the code itself. You may collapse parts of the code using the buttons in the margin. 
+            You can reset the visualization to the initial state by clicking ‘Parse’. 
+        </p>
 
-    <h3>3. Please share any other thoughts about your experience with the programming environment and code visualizations. </h3>
-    <textarea placeholder="please input" rows="5" cols="60" v-model="input1"></textarea><br>
+        <p>
+            You are welcome to ask any questions about the task or programming environment at this point.
+             You may continue to ask questions during the training questions. However, we cannot answer any questions once the study task has begun. 
+        </p>
 
-    <h2>Code Visualizations</h2>
-    <p>During this study you saw a couple different types of code visualizations: line, tick, and histogram. Please  describe your experience with the various code visualizations.</p>
-    <img src="@/assets/images/logo.png" alt=""/>
+        <p>
+            Press ‘Start’ when you are ready to begin this task. 
+        </p>
 
-    <h3>4. How helpful was each visualization type for completing the tasks? <span style="color:orange">*</span></h3>
-    <p style="font-style:italic;color:gray">Mark only one oval per row.</p>
-    <hr />
-     <my-radio :choices="radio2" class="radios" style="height:20px;">
-      <p slot="left">Quicker with unedited</p>
-    </my-radio>
-    <hr />
-     <my-radio :choices="radio2" class="radios" style="height:20px;">
-      <p slot="left">Quicker with unedited</p>
-    </my-radio>
-    <hr />
-     <my-radio :choices="radio2" class="radios" style="height:20px;">
-      <p slot="left">Quicker with unedited</p>
-    </my-radio>
-    <hr />
-     <my-radio :choices="radio2" class="radios" style="height:20px;">
-      <p slot="left">Quicker with unedited</p>
-    </my-radio>
-    <hr />
+        <p>
+            Please take this opportunity to thoroughly explore all possible states or settings of the visualization.
+             When you feel you have sufficiently explored the visualization and are ready to continue to the next step, press ‘Submit’. 
+        </p>
 
-    <h3>5. How interpretable was each visualization type for completing the tasks? <span style="color:orange">*</span></h3>
-    <p style="font-style:italic;color:gray">Mark only one oval per row.</p>
-    <hr />
-     <my-radio :choices="radio2" class="radios" style="height:20px;">
-      <p slot="left">Quicker with unedited</p>
-    </my-radio>
-    <hr />
-     <my-radio :choices="radio2" class="radios" style="height:20px;">
-      <p slot="left">Quicker with unedited</p>
-    </my-radio>
-    <hr />
-     <my-radio :choices="radio2" class="radios" style="height:20px;">
-      <p slot="left">Quicker with unedited</p>
-    </my-radio>
-    <hr />
-     <my-radio :choices="radio2" class="radios" style="height:20px;">
-      <p slot="left">Quicker with unedited</p>
-    </my-radio>
-    <hr />
+        <h3>1. What is the name of the primary dataset being visualized? </h3>
+            <p style="color:gray">school year and/or position (e.g. 2nd year PhD student, faculty, etc.)</p>
+        <input type="text" class="inputBox" v-bind:disabled="!isStart" v-model="answers[0]"/> <br>
 
-    <h3>6. How intrusive was each visualization type while completing the tasks? <span style="color:orange">*</span></h3>
-    <p style="font-style:italic;color:gray">Mark only one oval per row.</p>
-    <hr />
-     <my-radio :choices="radio2" class="radios" style="height:20px;">
-      <p slot="left">Quicker with unedited</p>
-    </my-radio>
-    <hr />
-     <my-radio :choices="radio2" class="radios" style="height:20px;">
-      <p slot="left">Quicker with unedited</p>
-    </my-radio>
-    <hr />
-     <my-radio :choices="radio2" class="radios" style="height:20px;">
-      <p slot="left">Quicker with unedited</p>
-    </my-radio>
-    <hr />
-     <my-radio :choices="radio2" class="radios" style="height:20px;">
-      <p slot="left">Quicker with unedited</p>
-    </my-radio>
-    <hr />
+        <h3>2. What is the name of the primary dataset being visualized? </h3>
+            <p style="color:gray">school year and/or position (e.g. 2nd year PhD student, faculty, etc.)</p>
+        <input type="text" class="inputBox"  v-bind:disabled="!isStart" v-model="answers[1]"/> <br>
 
-    <h3>7. Please share any other thoughts about your experience with the code visualizations.  </h3>
-    <textarea placeholder="please input" rows="5" cols="60" v-model="input2"></textarea><br>
-    
-    <h2>Demographic Information</h2>
-    <h3>8.Name<span style="color:orange">*</span></h3>
-    <input type="text" class="inputBox" v-model="name"/> <br>
+        <h3>3. What is the name of the primary dataset being visualized? </h3>
+            <p style="color:gray">school year and/or position (e.g. 2nd year PhD student, faculty, etc.)</p>
+        <input type="text" class="inputBox"  v-bind:disabled="!isStart" v-model="answers[2]"/> <br> <br>
 
-    <h3>9.Email<span style="color:orange">*</span></h3>
-    <p style="color:gray">What email would you like your gift card sent to?</p>
-    <input type="text" class="inputBox" v-model="email"/> <br>
-
-    <h3>10.Age<span style="color:orange">*</span></h3>
-    <input type="text" class="inputBox" v-model="age"/> <br>
-
-    <h3>11.Gender<span style="color:orange">*</span></h3>
-    <p style="font-style:italic;color:gray">Mark only one oval per row.</p>
-    <!-- <el-radio-group v-model="radio" style="float:left">
-        <el-radio v-for="(value,key) in gender"
-                :key="key" :label="value">
-            {{value}}
-        </el-radio>
-        <el-radio>Other:</el-radio>
-    </el-radio-group> -->
-    <my-radio :choices="gender" class="radios" style="float:left;">
-      <input type="text" slot="right" style="
-        dispaly:block
-        border: #878787; 
-        border-left-width: 0;
-        border-right-width: 0;
-        border-top-width: 0;
-        border-bottom-width: 2px;
-        border-style: solid;" v-model="other"/> 
-    </my-radio> <br><br>
-
-    <h3>12.Organizational Affiliation<span style="color:orange">*</span></h3>
-    <p style="color:gray">If your answer is the UW, please include your departmental affiliation as well.</p>
-    <input type="text" class="inputBox" v-model="org"/> <br>
-
-    <h3>13. Position<span style="color:orange">*</span></h3>
-    <p style="color:gray">school year and/or position (e.g. 2nd year PhD student, faculty, etc.)</p>
-    <input type="text" class="inputBox" v-model="position"/> <br>
-    
-    <h3>3. Please share any other thoughts about your experience with the programming environment and code visualizations. </h3>
-    <textarea placeholder="please input" rows="5" cols="60"  v-model="input3"></textarea><br>
-
-     <el-row>
-      <el-button round class="el-submit" @click="getChildren">submit</el-button>
-    </el-row>
+        <el-row>
+            <!-- <el-button round class="surveyBtn" style="background-color:purple" @click="parsePage">Parse</el-button> -->
+            <el-button round class="surveyBtn" style="background-color:green" @click="submit">Submit</el-button>
+        </el-row>
   </div>
 </template>
+
 <script>
-import myRadio from '@/components/myRadio'
 export default {
-  data() {
+  name: 'Questionnaire',
+  data () {
     return {
-      radio: [1,2,3,4,5,6,7],
-      radio1: [1,2,3,4,5,6,7],
-      radio2: ["1(Not Helpful)",2,3,4,"5(Extremely Helpful)","N/A"],
-      // textarea: '',
-      input1:'',
-      input2:'',
-      input3:'',
-      name:'',
-      email:'',
-      age:'',
-      gender:["Female","Male","Prefer not to say","Other:"],
-      org:'',
-      position:'',
-      other:''
-    };
+      isStart:true,
+      answers:new Array(3),
+      submitTimes:0
+    }
   },
-  methods: {
-    getChildren(){
+  methods:{
+    // parsePage(){
+    //     this.$router.go(0)
+    // },
+    submit(){
+      //只能提交一次
+      if(this.submitTimes !== 0){
+        alert("already submitted!")
+        return
+      }
       let data = {}
-      this.$children.forEach((val,idx) =>{
-        //是否需要处理原始结果 if(idx !== 0 && idx !== 1 && )
-        if(idx !== this.$children.length - 1){
-          let obj = {}
-          var x = idx
-          obj[x] = val.radio
-          data[x] = val.radio
-        }
-      })
-
-      data['input1'] = this.input1
-      data['input2'] = this.input2
-      data['input3'] = this.input3
-      data['name'] = this.name
-      data['email'] = this.email
-      data['age'] = this.age
-      data['org'] = this.org
-      data['position'] = this.position
-      data['other'] = this.other
-      // data.append({'input1':this.input1})
-      // data.append({'input2':this.input2})
-      // data.append({'input3':this.input3})
-      // data.append({'name':this.name})
-      // data.append({'email':this.email})
-      // data.append({'age':this.age})
-      // data.append({'org':this.org})
-      // data.append({'position':this.position})
-      // data.append({'other':this.other})
-
+      data['survey'] = this.answers
+      data['baseline1'] = this.$store.state.baseline1
+      data['baseline2'] = this.$store.state.baseline2
+      data['visualization'] = this.$store.state.visualization
+      data['group'] = this.$store.state.url
       this.$axios({
         headers:{
           "Content-Type":"application/x-www-form-urlencoded;charset-utf-8"
@@ -198,28 +81,26 @@ export default {
         url:'http://localhost:80/api/getSurvey',
         method:'post',
         data:this.$qs.stringify(data)
+      }).then(res => {
+        alert("submit success!")
+        this.submitTimes += 1
       })
-    }
-  },
-  components:{
-    myRadio
+    },
   }
-};
+}
 </script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .questions{
-    margin-left: 10%;
-    margin-right: 10%;
+  .questionnaire{
+    margin-left: 20%;
+    margin-right: 20%;
   }
-  h2,p,h3{
+  p{
     text-align: left;
   }
-  /* .elInput{
-    margin: auto;
-  } */
   .inputBox{
-    width: 50%;
+    width: 100%;
     float: left;
     border: #878787; 
     border-left-width: 0;
@@ -228,18 +109,13 @@ export default {
     border-bottom-width: 2px;
     border-style: solid;
   }
-
-  textarea{
-    float: center;
-  }
-
-  .el-submit{
+  .surveyBtn{
     height: 2em;
     width: 4em;
     font-size: 1em;
     color: white;
-    background-color:green;
     opacity: 0.7;
     border: 1px solid white;
   }
 </style>
+
