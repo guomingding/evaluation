@@ -96,7 +96,7 @@ export default {
     margin-left: 20%;
     margin-right: 20%;
   }
-  p{
+  h3,p{
     text-align: left;
   }
   .inputBox{
