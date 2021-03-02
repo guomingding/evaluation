@@ -25,7 +25,6 @@ def getData():
         records2.append(request.form)
         with open('./backend/data/group2/data.json','w') as f:
             json.dump(records2,f)
-            # return jsonify({'script_content': script_content, 'language': language})
     return jsonify({'group1':records1,'group2':records2})
 
 @app.route('/api/getRes', methods=['get'])
