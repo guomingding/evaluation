@@ -4,7 +4,7 @@ import os
 
 app = Flask(__name__, static_folder='../dist/static',
             template_folder='../dist')
-CORS(app, supports_credentials=True)  
+# CORS(app, supports_credentials=True)  
 
 @app.route('/')
 def index():
