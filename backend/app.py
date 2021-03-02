@@ -29,7 +29,7 @@ def getData():
 
 @app.route('/api/getRes', methods=['get'])
 def getRes():
-    return jsonify({'group1':records1,'group2':records2})
+    return jsonify({'group1':json.load(open('./backend/data/group1/data.json','r')),'group2':json.load(open('./backend/data/group2/data.json','r'))})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
