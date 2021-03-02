@@ -82,8 +82,13 @@ export default {
         method:'post',
         data:this.$qs.stringify(data)
       }).then(res => {
-        alert("submit success!")
-        this.submitTimes += 1
+        console.log(res)
+        if(res.data === 'True'){
+          alert("submit success!")
+          this.submitTimes += 1
+        }else{
+          alert("submit fail!")
+        }
       })
     },
   }
