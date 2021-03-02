@@ -6,6 +6,12 @@ app = Flask(__name__, static_folder='../dist/static',
             template_folder='../dist')
 CORS(app, supports_credentials=True)  
 
+@app.route('/')
+def index():
+    # 由于前端html页面都被打包压缩，因此直接使用jinja模板来传参不可行，这样就要另开启一个接口
+    return render_template('index.html') # render_template('index.html', language='r') 此种方法行不通
+
+
 records1 = []
 records2 = []
 @app.route('/api/getSurvey', methods=['post'])
