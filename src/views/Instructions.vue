@@ -39,6 +39,9 @@ export default {
     toTraining(){
       this.$router.push('/training')
     }
+  },
+  mounted(){
+    this.$store.commit('setUrl',this.$route.path)
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <div class="questionnaire">
-      <h1>Questionnaire</h1>
+  <div class="baseline2">
+      <h1>Baseline Condition2</h1>
       <p>This Vega program creates a basic bar chart. Mousing over the bars shows a tooltip with the bar value. </p>
       
       <p>For this task you will be asked a series of questions about the behavior of the code.
@@ -31,71 +31,77 @@
 
         <h3>1. What is the name of the primary dataset being visualized? </h3>
             <p style="color:gray">school year and/or position (e.g. 2nd year PhD student, faculty, etc.)</p>
-        <input type="text" class="inputBox" v-bind:disabled="!isStart" v-model="answers[0]"/> <br>
+        <input type="text" class="inputBox" v-bind:disabled="!isStart" v-model="answers[0]" /> <br>
 
-        <h3>2. What is the name of the primary dataset being visualized? </h3>
+        <h3>2. What is the name of the primary dataset being visualized? <span style="color:orange">*</span></h3>
             <p style="color:gray">school year and/or position (e.g. 2nd year PhD student, faculty, etc.)</p>
-        <input type="text" class="inputBox"  v-bind:disabled="!isStart" v-model="answers[1]"/> <br>
+        <input type="text" class="inputBox" tag = "mustAns" v-bind:disabled="!isStart" v-model="answers[1]" @input="inputAns"/> <br>
 
         <h3>3. What is the name of the primary dataset being visualized? </h3>
             <p style="color:gray">school year and/or position (e.g. 2nd year PhD student, faculty, etc.)</p>
         <input type="text" class="inputBox"  v-bind:disabled="!isStart" v-model="answers[2]"/> <br> <br>
 
         <el-row>
-            <!-- <el-button round class="surveyBtn" style="background-color:purple" @click="parsePage">Parse</el-button> -->
-            <el-button round class="surveyBtn" style="background-color:green" @click="submit">Submit</el-button>
+            <el-button round class="baseline2Btn" style="background-color:purple" @click="parsePage">Parse</el-button>
+            <el-button round class="baseline2Btn" style="background-color:green" :disabled="!allowSubmit" @click="submit">Submit</el-button>
         </el-row>
   </div>
 </template>
 
 <script>
+import {judgeAllowSubmit} from '@/assets/js/utils.js'
 export default {
-  name: 'Questionnaire',
+  name: 'Baseline2',
   data () {
     return {
       isStart:true,
-      answers:new Array(3),
-      submitTimes:0
+      answers:Array.from(new Array(3+1),(v,k) => ''),
+      startTime:0,
+      allowSubmit:false
+    }
+  },
+  created(){
+    if(localStorage.getItem("store")){
+      this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(localStorage.getItem("store"))))
+      localStorage.removeItem("store")
     }
   },
   methods:{
-    // parsePage(){
-    //     this.$router.go(0)
-    // },
-    submit(){
-      //只能提交一次
-      if(this.submitTimes !== 0){
-        alert("already submitted!")
-        return
-      }
-      let data = {}
-      data['survey'] = this.answers
-      data['baseline1'] = this.$store.state.baseline1
-      data['baseline2'] = this.$store.state.baseline2
-      data['visualization'] = this.$store.state.visualization
-      data['group'] = this.$store.state.url
-      this.$axios({
-        headers:{
-          "Content-Type":"application/x-www-form-urlencoded;charset-utf-8"
-        },
-        url:'http://localhost:80/api/getSurvey',
-        method:'post',
-        data:this.$qs.stringify(data)
-      }).then(res => {
-        alert("submit success!")
-        this.submitTimes += 1
-      })
+    parsePage(){
+      localStorage.setItem("store",JSON.stringify(this.$store.state))
+      this.$router.go(0)
     },
+    inputAns(){
+        this.allowSubmit = judgeAllowSubmit(this.answers)
+    },
+    submit(){
+        this.answers[this.answers.length - 1] = new Date().getTime() - this.startTime
+        this.$store.commit('setBaseline2',this.answers)
+        if(this.$store.state.url === '/instructions1'){
+            this.$router.push('/vis_training')
+        }else{
+            this.$router.push('/survey')
+        }
+    },
+  },
+  mounted(){
+    this.startTime = new Date().getTime()
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .questionnaire{
+  .baseline2{
     margin-left: 20%;
     margin-right: 20%;
   }
+  .bold{
+    border: 0;
+    border-top: 5px solid purple;
+    opacity: 0.7;
+  }
+
   h3,p{
     text-align: left;
   }
@@ -109,7 +115,7 @@ export default {
     border-bottom-width: 2px;
     border-style: solid;
   }
-  .surveyBtn{
+  .baseline2Btn{
     height: 2em;
     width: 4em;
     font-size: 1em;
@@ -118,4 +124,3 @@ export default {
     border: 1px solid white;
   }
 </style>
-
