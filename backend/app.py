@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify, send_from_directory,json
+from flask import Flask, request, render_template, jsonify, send_from_directory,json,jsonify
 # from flask_cors import CORS 
 import os
 
@@ -25,7 +25,12 @@ def getData():
         records2.append(request.form)
         with open('./backend/data/group2/data.json','w') as f:
             json.dump(records2,f)
-    return ''
+            # return jsonify({'script_content': script_content, 'language': language})
+    return jsonify({'group1':records1,'group2':records2})
+
+@app.route('/api/getRes', methods=['get'])
+def getRes():
+    return jsonify({'group1':records1,'group2':records2})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)

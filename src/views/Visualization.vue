@@ -59,8 +59,15 @@ export default {
       allowSubmit:false
     }
   },
+  created(){
+    if(localStorage.getItem("store")){
+      this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(localStorage.getItem("store"))))
+      localStorage.removeItem("store")
+    }
+  },
   methods:{
     parsePage(){
+        localStorage.setItem("store",JSON.stringify(this.$store.state))
         this.$router.go(0)
     },
     inputAns(){
