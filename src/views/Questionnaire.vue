@@ -78,7 +78,7 @@ export default {
         headers:{
           "Content-Type":"application/x-www-form-urlencoded;charset-utf-8"
         },
-        url:'http://localhost:80/api/getSurvey',
+        url:'/api/getSurvey',
         method:'post',
         data:this.$qs.stringify(data)
       }).then(res => {
