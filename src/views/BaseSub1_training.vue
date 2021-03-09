@@ -18,7 +18,7 @@
                         >
                     </el-table-column>
                 </el-table>
-                <h3><a :href="v_q.ref">{{v_q.name}}</a></h3>
+                <h3><a :href="v_q.ref" target="_blank">{{v_q.name}}</a></h3>
                 <el-row style="background:white">{{v_q.desc}}</el-row>
                 <div style="background:white;margin-top:20px">
                     <el-row style="margin-bottom:10px">a question</el-row>
@@ -63,11 +63,15 @@ export default {
     }else{
         let funcsInTraining = this.$store.state.funcsSelectedInTraining.length === 0 ? [] : this.$store.state.funcsSelectedInTraining
         console.log(funcsInTraining)
-        idxs = randomlySelect(Array.from(new Array(rfunctions.length),(v,k) => k),funcsInTraining,5)
-        this.$store.commit("setFuncsSelectedInTraining",idxs)
+        if(this.$store.state.funcsSelectedInTraining.length !== 0){
+          idxs = this.$store.state.funcsSelectedInTraining
+        }else{
+          idxs = randomlySelect(Array.from(new Array(rfunctions.length),(v,k) => k),funcsInTraining,5)
+          this.$store.commit("setFuncsSelectedInTraining",idxs)
+        }
     }
 
-    console.log(idxs)
+    console.log("idxs in training: ",idxs)
     for(let idx = 0;idx < idxs.length; idx++){
         this.funcSelected.push(rfunctions[idxs[idx]])
     }

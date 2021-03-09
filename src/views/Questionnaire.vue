@@ -40,10 +40,8 @@
         <h3>3. What is the name of the primary dataset being visualized? </h3>
             <p style="color:gray">school year and/or position (e.g. 2nd year PhD student, faculty, etc.)</p>
         <input type="text" class="inputBox"  v-bind:disabled="!isStart" v-model="answers[2]"/> <br> <br>
-
         <el-row>
-            <!-- <el-button round class="surveyBtn" style="background-color:purple" @click="parsePage">Parse</el-button> -->
-            <el-button round class="surveyBtn" style="background-color:green" @click="submit">Submit</el-button>
+           <el-button round class="el-next" style="background:green" @click="submit"><span style="color:black">Submit</span></el-button>
         </el-row>
   </div>
 </template>
@@ -75,8 +73,6 @@ export default {
       data['visualization1'] = this.$store.state.visualization1
       data['visualization2'] = this.$store.state.visualization2
       data['group'] = this.$store.state.url
-
-      console.log(data)
 
       this.$axios({
         headers:{
@@ -116,14 +112,6 @@ export default {
     border-top-width: 0;
     border-bottom-width: 2px;
     border-style: solid;
-  }
-  .surveyBtn{
-    height: 2em;
-    width: 4em;
-    font-size: 1em;
-    color: white;
-    opacity: 0.7;
-    border: 1px solid white;
   }
 </style>
 

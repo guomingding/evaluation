@@ -22,9 +22,10 @@
                 </div>
                 <br>
                 <el-row>
-                    <a v-for="(v_f,k_f) in rfuncs.name" :key="k_f" :href="rfuncs.refs[k_f]" style="margin-right:30px">{{v_f}}</a>
+                    <a v-for="(v_f,k_f) in rfuncs.name" :key="k_f" :href="rfuncs.refs[k_f]" style="margin-right:30px" target="_blank">{{v_f}}</a>
                 </el-row>
-                <el-row style="background:white;margin-top:20px">{{rdesc}}</el-row>
+                <!-- <el-row style="background:white;margin-top:20px">{{rdesc}}</el-row> -->
+                <img :src="picPath" />
               
                 <div style="background:white;margin-top:20px"  v-for="(v_q,k_q) in questions" :key="v_q">
                     <el-row style="margin-bottom:10px">{{v_q}}</el-row>
@@ -51,6 +52,7 @@ export default {
   name: 'VisSub2_training',
   data () {
     return {
+      picPath:'',
       scriptSelected:'',
       rscript:'',
       rfuncs:{},
@@ -77,15 +79,21 @@ export default {
         idxs =  this.$store.state.scriptSelectedInTraining
         localStorage.removeItem("store")
     }else{
-        let scriptSelectedInTraining = this.$store.state.scriptSelectedInTraining
-        idxs = randomlySelect(Array.from(new Array(rscripts.length),(v,k) => k),scriptSelectedInTraining,1)
-        this.$store.commit("setScriptSelectedInTraining",idxs)
+        if(this.$store.state.scriptSelectedInTraining.length !== 0){
+          idxs = this.$store.state.scriptSelectedInTraining
+        }else{
+          let scriptSelectedInTraining = this.$store.state.scriptSelectedInTraining
+          idxs = randomlySelect(Array.from(new Array(rscripts.length),(v,k) => k),scriptSelectedInTraining,1)
+          this.$store.commit("setScriptSelectedInTraining",idxs)
+        }
     }
     this.scriptSelected = idxs[0]
     this.rscript = rscripts[idxs[0]].rscript
     this.tableData = Array.from(new Array(tables[idxs[0]].length),()=>[])
     this.rfuncs = rscripts[idxs[0]].functions
     this.rdesc =  rscripts[idxs[0]].desc
+    let path = rscripts[idxs[0]].glyph
+    this.picPath = require("../assets/images/" + path)
   },
   methods:{
     getTableData(i){

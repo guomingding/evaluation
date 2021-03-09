@@ -22,7 +22,7 @@
                 </div>
                 <br>
                 <el-row>
-                    <a v-for="(v_f,k_f) in rfuncs.name" :key="k_f" :href="rfuncs.refs[k_f]" style="margin-right:30px" @click="addCount">{{v_f}}</a>
+                    <a v-for="(v_f,k_f) in rfuncs.name" :key="k_f" :href="rfuncs.refs[k_f]" style="margin-right:30px" @click="addCount" target="_blank">{{v_f}}</a>
                 </el-row>
                 <!-- <el-row style="background:white;margin-top:20px">{{rdesc}}</el-row> -->
                 <img :src="picPath" />
@@ -84,11 +84,15 @@ export default {
         this.clickCount = 0
         this.startTime = new Date().getTime()
         this.$store.commit("setVisualization2StartTime",this.startTime)
-        
-        let scriptSelectedInTraining = this.$store.state.scriptSelectedInTraining
-        let scriptSelectedInBase2 = this.$store.state.scriptSelectedInBase2
-        idxs = randomlySelect(Array.from(new Array(rscripts.length),(v,k) => k),scriptSelectedInTraining.concat(scriptSelectedInBase2),1)
-        this.$store.commit("setScriptSelectedInVis2",idxs)
+      
+        if(this.$store.state.scriptSelectedInVis2.length !== 0){
+          idxs = this.$store.state.scriptSelectedInVis2
+        }else{
+          let scriptSelectedInTraining = this.$store.state.scriptSelectedInTraining
+          let scriptSelectedInBase2 = this.$store.state.scriptSelectedInBase2
+          idxs = randomlySelect(Array.from(new Array(rscripts.length),(v,k) => k),scriptSelectedInTraining.concat(scriptSelectedInBase2),1)
+          this.$store.commit("setScriptSelectedInVis2",idxs)
+        } 
     }
   
     this.scriptSelected = idxs[0]

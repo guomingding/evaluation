@@ -22,7 +22,7 @@
                 </div>
                 <br>
                 <el-row>
-                    <a v-for="(v_f,k_f) in rfuncs.name" :key="k_f" :href="rfuncs.refs[k_f]" style="margin-right:30px">{{v_f}}</a>
+                    <a v-for="(v_f,k_f) in rfuncs.name" :key="k_f" :href="rfuncs.refs[k_f]" style="margin-right:30px" target="_blank">{{v_f}}</a>
                 </el-row>
                 <el-row style="background:white;margin-top:20px">{{rdesc}}</el-row>
               
@@ -77,10 +77,15 @@ export default {
         idxs =  this.$store.state.scriptSelectedInTraining
         localStorage.removeItem("store")
     }else{
+      if(this.$store.state.scriptSelectedInTraining.length !== 1){
+        idxs = this.$store.state.scriptSelectedInTraining
+      }else{
         let scriptSelectedInTraining = this.$store.state.scriptSelectedInTraining
         idxs = randomlySelect(Array.from(new Array(rscripts.length),(v,k) => k),scriptSelectedInTraining,1)
         this.$store.commit("setScriptSelectedInTraining",idxs)
+      }
     }
+    
     this.scriptSelected = idxs[0]
     this.rscript = rscripts[idxs[0]].rscript
     this.tableData = Array.from(new Array(tables[idxs[0]].length),()=>[])

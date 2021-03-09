@@ -22,7 +22,7 @@
                 </div>
                 <br>
                 <el-row>
-                    <a v-for="(v_f,k_f) in rfuncs.name" :key="k_f" :href="rfuncs.refs[k_f]" style="margin-right:30px" @click="addClick">{{v_f}}</a>
+                    <a v-for="(v_f,k_f) in rfuncs.name" :key="k_f" :href="rfuncs.refs[k_f]" style="margin-right:30px" @click="addClick" target="_blank">{{v_f}}</a>
                 </el-row>
                 <el-row style="background:white;margin-top:20px">{{rdesc}}</el-row>
               
@@ -87,8 +87,12 @@ export default {
         
         let scriptSelectedInTraining = this.$store.state.scriptSelectedInTraining
         let scriptSelectedInVis2 = this.$store.state.scriptSelectedInVis2
-        idxs = randomlySelect(Array.from(new Array(rscripts.length),(v,k) => k),scriptSelectedInTraining.concat(scriptSelectedInVis2),1)
-        this.$store.commit("setScriptSelectedInBase2",idxs)
+        if(this.$store.state.scriptSelectedInBase2.length !== 0){
+          idxs = this.$store.state.scriptSelectedInBase2
+        }else{
+          idxs = randomlySelect(Array.from(new Array(rscripts.length),(v,k) => k),scriptSelectedInTraining.concat(scriptSelectedInVis2),1)
+          this.$store.commit("setScriptSelectedInBase2",idxs)
+        }   
     }
   
     this.scriptSelected = idxs[0]

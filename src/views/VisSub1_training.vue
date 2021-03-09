@@ -18,8 +18,9 @@
                         >
                     </el-table-column>
                 </el-table>
-                <h3><a :href="v_q.ref">{{v_q.name}}</a></h3>
-                <el-row style="background:white">{{v_q.desc}}</el-row>
+                <h3><a :href="v_q.ref" target="_blank">{{v_q.name}}</a></h3>
+                <!-- <el-row style="background:white">{{v_q.desc}}</el-row> -->
+                <img :src="picPaths[k_q]" alt=""/>
                 <div style="background:white;margin-top:20px">
                     <el-row style="margin-bottom:10px">a question</el-row>
                     <el-checkbox-group v-model="checkList[k_q]" @change="showChoices">
@@ -47,6 +48,7 @@ export default {
   name: 'VisSub1_training',
   data () {
     return {
+      picPaths:[],
       funcSelected:[],
       tableData: [],
       tableHead: [],
@@ -61,13 +63,19 @@ export default {
       idxs = this.$store.state.funcsSelectedInTraining
       localStorage.removeItem("store")
     }else{
+      if(this.$store.state.funcsSelectedInTraining.length !== 0){
+        idxs = this.$store.state.funcsSelectedInTraining
+      }else{
         let funcsInTraining = this.$store.state.funcsSelectedInTraining.length === 0 ? [] : this.$store.state.funcsSelectedInTraining
         idxs = randomlySelect(Array.from(new Array(rfunctions.length),(v,k) => k),funcsInTraining,5)
         this.$store.commit("setFuncsSelectedInTraining",idxs)
+      }  
     }
 
     for(let idx = 0;idx < idxs.length; idx++){
         this.funcSelected.push(rfunctions[idxs[idx]])
+        let path = rfunctions[idxs[idx]].glyph
+        this.picPaths.push(require("../assets/images/" + path))
     }
 
   },

@@ -22,6 +22,7 @@ function randomlySelect(allChoices,hasSelected,num){
     console.log("111")
     for(let idx = 0;idx < allChoices.length;idx++){
       if(hasSelected.indexOf(allChoices[idx]) === -1){
+        if(count >= num)break
         selections.push(allChoices[idx])
       }
     }

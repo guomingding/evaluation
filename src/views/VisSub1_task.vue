@@ -18,9 +18,9 @@
                         >
                     </el-table-column>
                 </el-table>
-                <h3><a :href="v_q.ref" @click="addCount">{{v_q.name}}</a></h3>
+                <h3><a :href="v_q.ref" @click="addCount" target="_blank">{{v_q.name}}</a></h3>
                 <!-- <el-row style="background:white">{{v_q.desc}}</el-row> -->
-                <img :src="picPaths[k_q]" alt="123"/>
+                <img :src="picPaths[k_q]" alt=""/>
                 <div style="background:white;margin-top:20px">
                     <el-row style="margin-bottom:10px">a question</el-row>
                     <el-checkbox-group v-model="checkList[k_q]">
@@ -75,9 +75,15 @@ export default {
         let funcsInTraining = this.$store.state.funcsSelectedInTraining
         let funcsInBase1 = this.$store.state.funcsSelectedInBase1
 
-        idxs = randomlySelect(Array.from(new Array(rfunctions.length),(v,k) => k),
-            funcsInTraining.concat(funcsInBase1),5)
-        this.$store.commit("setFuncsSelectedInVis1",idxs)
+        console.log("funcs in training: ",funcsInTraining)
+        console.log("funcs in base1: ",funcsInBase1)
+        if(this.$store.state.funcsSelectedInVis1.length !== 0){
+          idxs = this.$store.state.funcsSelectedInVis1
+        }else{
+          idxs = randomlySelect(Array.from(new Array(rfunctions.length),(v,k) => k),
+              funcsInTraining.concat(funcsInBase1),5)
+          this.$store.commit("setFuncsSelectedInVis1",idxs)
+        }
     }
     
     for(let idx = 0;idx < idxs.length; idx++){

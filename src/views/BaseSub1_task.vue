@@ -18,7 +18,7 @@
                         >
                     </el-table-column>
                 </el-table>
-                <h3><a :href="v_q.ref" @click="addClick">{{v_q.name}}</a></h3>
+                <h3><a :href="v_q.ref" @click="addClick" target="_blank">{{v_q.name}}</a></h3>
                 <el-row style="background:white">{{v_q.desc}}</el-row>
                 <div style="background:white;margin-top:20px">
                     <el-row style="margin-bottom:10px">a question</el-row>
@@ -75,9 +75,13 @@ export default {
 
         console.log(funcsInTraining)
         console.log(funcsInVis1)
-        idxs = randomlySelect(Array.from(new Array(rfunctions.length),(v,k) => k),
-            funcsInTraining.concat(funcsInVis1),5)
-        this.$store.commit("setFuncsSelectedInBase1",idxs)
+        if(this.$store.state.funcsSelectedInBase1.length !== 0){
+          idxs = this.$store.state.funcsSelectedInBase1
+        }else{
+          idxs = randomlySelect(Array.from(new Array(rfunctions.length),(v,k) => k),
+              funcsInTraining.concat(funcsInVis1),5)
+          this.$store.commit("setFuncsSelectedInBase1",idxs)
+        }
     }
     
     console.log(idxs)
