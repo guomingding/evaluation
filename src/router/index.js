@@ -1,62 +1,86 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/views/HelloWorld'
-import Instrctions from '@/views/Instructions'
-import Training from '@/views/Training'
+
+import BaseSub1_training from '@/views/BaseSub1_training'
+import BaseSub2_training from '@/views/BaseSub2_training'
+import BaseSub1_task from '@/views/BaseSub1_task'
+import BaseSub2_task from '@/views/BaseSub2_task'
+
+import VisSub1_training from '@/views/VisSub1_training'
+import VisSub2_training from '@/views/VisSub2_training'
+import VisSub1_task from '@/views/VisSub1_task'
+import VisSub2_task from '@/views/VisSub2_task'
+
+import BaselineIntro from '@/views/BaselineIntro'
+import VisualizationIntro from '@/views/VisualizationIntro'
+
 import Questionnaire from '@/views/Questionnaire'
-import Baseline1 from '@/views/Baseline1'
-import VisualizationTraining from '@/views/VisualizationTraining'
-import Baseline2 from '@/views/Baseline2'
-import Visualization from '@/views/Visualization'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path:'/',
+      name:'BaseSub1_training',
+      component:BaseSub1_training
     },
     {
-      path: '/instructions1',
-      name: 'Ins1',
-      component: Instrctions
+      path:'/baseline',
+      name:'BaselineIntro',
+      component:BaselineIntro
     },
     {
-      path: '/instructions2',
-      name: 'Ins2',
-      component: Instrctions
+      path:'/visualization',
+      name:'VisualizationIntro',
+      component:VisualizationIntro
     },
     {
-      path: '/training',
-      name: 'Training',
-      component: Training
+      path:'/base_sub1_training',
+      name:'BaseSub1_training',
+      component:BaseSub1_training
     },
     {
-      path: '/survey',
-      name: 'Survey',
-      component: Questionnaire
+      path:'/base_sub2_training',
+      name:'BaseSub2_training',
+      component:BaseSub2_training
     },
     {
-      path: '/baseline1',
-      name: 'Baseline1',
-      component: Baseline1
+      path:'/base_sub1_task',
+      name:'BaseSub1_task',
+      component:BaseSub1_task
     },
     {
-      path: '/baseline2',
-      name: 'Baseline2',
-      component: Baseline2
+      path:'/base_sub2_task',
+      name:'BaseSub2_task',
+      component:BaseSub2_task
+    },
+
+    
+    {
+      path:'/vis_sub1_training',
+      name:'VisSub1_training',
+      component:VisSub1_training
     },
     {
-      path: '/vis_training',
-      name: 'VisualizationTraining',
-      component: VisualizationTraining
+      path:'/vis_sub2_training',
+      name:'VisSub2_training',
+      component:VisSub2_training
     },
     {
-      path: '/visualization',
-      name: 'Visualization',
-      component: Visualization
+      path:'/Vis_sub1_task',
+      name:'VisSub1_task',
+      component:VisSub1_task
+    },
+    {
+      path:'/vis_sub2_task',
+      name:'VisSub2_task',
+      component:VisSub2_task
+    },
+    {
+      path:'/survey',
+      name:'Questionnaire',
+      component:Questionnaire
     }
   ]
 })

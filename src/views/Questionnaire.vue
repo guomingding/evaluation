@@ -72,8 +72,12 @@ export default {
       data['survey'] = this.answers
       data['baseline1'] = this.$store.state.baseline1
       data['baseline2'] = this.$store.state.baseline2
-      data['visualization'] = this.$store.state.visualization
+      data['visualization1'] = this.$store.state.visualization1
+      data['visualization2'] = this.$store.state.visualization2
       data['group'] = this.$store.state.url
+
+      console.log(data)
+
       this.$axios({
         headers:{
           "Content-Type":"application/x-www-form-urlencoded;charset-utf-8"
@@ -82,7 +86,6 @@ export default {
         method:'post',
         data:this.$qs.stringify(data)
       }).then(res => {
-        console.log(res)
         if(res.data === 'True'){
           alert("submit success!")
           this.submitTimes += 1

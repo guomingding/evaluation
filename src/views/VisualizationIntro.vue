@@ -1,5 +1,5 @@
 <template>
-  <div class="instruction">
+  <div class="VisualizationIntro">
     <h2 align='center'>Instructions</h2>
     <hr class="bold"/>
     <div class="introduction">
@@ -22,22 +22,17 @@
     </div>
 
     <el-row>
-      <el-button round class="el-next" @click="toTraining">next</el-button>
+      <el-button round class="el-next" style="background:green" @click="toTraining"><span style="color:black">Next</span></el-button>
     </el-row>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  },
+  name: 'VisualizationIntro',
   methods:{
     toTraining(){
-      this.$router.push('/training')
+      this.$router.push('/vis_sub1_training')
     }
   },
   mounted(){
@@ -48,9 +43,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .instruction{
-    margin-left: 10%;
-    margin-right: 10%;
+  .VisualizationIntro{
+    margin-left: 20%;
+    margin-right: 20%;
   }
   .bold{
     border: 0;
@@ -62,13 +57,5 @@ export default {
     text-align: left;
   }
 
-  .el-next{
-    height: 2em;
-    width: 4em;
-    font-size: 1em;
-    color: white;
-    background-color:green;
-    opacity: 0.7;
-    border: 1px solid white;
-  }
+
 </style>

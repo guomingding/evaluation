@@ -12,7 +12,11 @@
   "dependencies": {
     "ant-design": "^1.0.0",
     "axios": "^0.21.1",
+    "d3": "^6.5.0",
+    "ds": "^1.4.2",
     "element-ui": "^2.15.1",
+    "jquery": "^3.6.0",
+    "papaparse": "^5.3.0",
     "qs": "^6.7.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",

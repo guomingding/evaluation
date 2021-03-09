@@ -22,7 +22,7 @@ def getData():
     except BaseException:
         records2 = []
     try:
-        if json.loads(json.dumps(request.form))['group'] == '/instructions1':
+        if json.loads(json.dumps(request.form))['group'] == '/baseline':
             records1.append(request.form)
             with open('./backend/data/group1/data.json','w') as f:
                 json.dump(records1,f)
