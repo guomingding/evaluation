@@ -77,7 +77,7 @@ export default {
         idxs =  this.$store.state.scriptSelectedInTraining
         localStorage.removeItem("store")
     }else{
-      if(this.$store.state.scriptSelectedInTraining.length !== 1){
+      if(this.$store.state.scriptSelectedInTraining.length !== 0){
         idxs = this.$store.state.scriptSelectedInTraining
       }else{
         let scriptSelectedInTraining = this.$store.state.scriptSelectedInTraining
