@@ -99,7 +99,7 @@ export default {
             this.isClicked = Array.from(new Array(tables[this.scriptSelected].length),()=>false)
         }else if(this.isClicked[i] === true)return
         
-        var data = Papa.parse(tables[this.scriptSelected][i][0]).data;
+        var data = Papa.parse(tables[this.scriptSelected][i]).data;
 
         console.log("Data: ",data)
 

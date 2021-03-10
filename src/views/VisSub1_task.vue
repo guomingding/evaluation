@@ -51,8 +51,8 @@ export default {
       clickCount:0,
       startTime:'',
       funcSelected:[],
-      tableData: [],
-      tableHead: [],
+      tableData: Array.from(new Array(5),()=>[]),
+      tableHead: Array.from(new Array(5),()=>[]),
       isClicked: Array.from(new Array(5),()=>false),
       checkList: Array.from(new Array(5),()=>[]),
       picPaths: []
@@ -99,7 +99,10 @@ export default {
         var data = Papa.parse(tables[i]).data;
         let objArr = []
     
-        this.tableHead.push(data[0])
+        this.tableHead[i] = data[0]
+        this.tableHead.sort(function(a,b){
+          return true
+        })
  
         for(let row = 1;row < data.length;row++){
             let tempObj = {}
@@ -108,7 +111,10 @@ export default {
             }
             objArr.push(tempObj)
         }
-        this.tableData.push(objArr)
+        this.tableData[i] = objArr
+        this.tableData.sort(function(a,b){
+          return true
+        })
         this.isClicked[i] = true
     },
     parsePage(){

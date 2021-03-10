@@ -9,7 +9,9 @@
                 <el-button @click="getTableData(k_q)" size='mini'>show table</el-button>
                 <el-table
                     :data="tableData[k_q]"
-                    style="width: 100%" :border="true">
+                    style="width: 100%" 
+                    border
+                    >
                     <el-table-column
                         v-for="(v_t,k_t) in tableHead[k_q]"
                         :key="k_t"
@@ -48,12 +50,13 @@ export default {
   data () {
     return {
       funcSelected:[],
-      tableData: [],
-      tableHead: [],
+      tableData: Array.from(new Array(5),()=>[]),
+      tableHead: Array.from(new Array(5),()=>[]),
       isClicked: Array.from(new Array(5),()=>false),
       checkList: Array.from(new Array(5),()=>[])
     }
   },
+ 
   mounted(){
     let idxs = []
     if(localStorage.getItem("store")){
@@ -70,30 +73,35 @@ export default {
           this.$store.commit("setFuncsSelectedInTraining",idxs)
         }
     }
-
     console.log("idxs in training: ",idxs)
     for(let idx = 0;idx < idxs.length; idx++){
         this.funcSelected.push(rfunctions[idxs[idx]])
-    }
-
+    } 
   },
   methods:{
-    getTableData(i){
+      getTableData(i){
         if(this.isClicked[i])return
         var data = Papa.parse(tables[i]).data;
         let objArr = []
     
-        this.tableHead.push(data[0])
- 
+        // this.tableHead[.push](data[0]) 
+        this.tableHead[i] = data[0]
+        this.tableHead.sort(function(a,b){
+          return true
+        })
+
         for(let row = 1;row < data.length;row++){
             let tempObj = {}
             for(let col = 0;col < data[0].length;col++){
                 tempObj[data[0][col]] = data[row][col]
             }
-            console.log("tempObj: ",tempObj)
             objArr.push(tempObj)
         }
-        this.tableData.push(objArr)
+        // this.tableData.push(objArr) 
+        this.tableData[i] = objArr
+        this.tableData.sort(function(a,b){
+          return true
+        })
         this.isClicked[i] = true
     },
     showChoices(){
