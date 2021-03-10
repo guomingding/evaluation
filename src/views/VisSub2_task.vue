@@ -98,6 +98,7 @@ export default {
     this.scriptSelected = idxs[0]
     this.rscript = rscripts[idxs[0]].rscript
     this.tableData = Array.from(new Array(tables[idxs[0]].length),()=>[])
+    this.tableHead = Array.from(new Array(tables[idxs[0]].length),()=>[])
     this.rfuncs = rscripts[idxs[0]].functions
     let path = rscripts[idxs[0]].glyph
     this.picPath = require("../assets/images/" + path)
@@ -111,11 +112,12 @@ export default {
         
         var data = Papa.parse(tables[this.scriptSelected][i]).data;
 
-        console.log("Data: ",data)
-
         let objArr = []
     
-        this.tableHead.push(data[0])
+        this.tableHead[i] = data[0]
+        this.tableHead.sort(function(a,b){
+          return true
+        })
  
         for(let row = 1;row < data.length;row++){
             let tempObj = {}
@@ -125,6 +127,9 @@ export default {
             objArr.push(tempObj)
         }
         this.tableData[i] = objArr
+        this.tableData.sort(function(a,b){
+          return true
+        })
         this.isClicked[i] = true
     },
 
