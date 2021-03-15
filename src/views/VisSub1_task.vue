@@ -1,5 +1,7 @@
 <template>
   <div class="vis_sub1_task">
+      <h2 align='center'>Task for Visualization</h2>
+      <hr class="bold"/>
       <el-container style="background:#DCDFE6;margin-bottom:50px" v-for="(v_q,k_q) in funcSelected" :key="k_q">
           <el-header height='25px'>
               <h2>{{k_q + 1}}</h2>
@@ -34,7 +36,7 @@
       </el-container>
       <el-row style="text-align:center">
           <el-button round class="trainingBtn" style="background:yellow" @click="parsePage" border><span style="color:black">Parse</span></el-button>
-          <el-button round class="trainingBtn" style="background:green" @click="next" border><span style="color:black">Next</span></el-button>
+          <el-button round class="trainingBtn" type="success" @click="next" border><span style="color:black">Next</span></el-button>
       </el-row>
   </div>
 </template>
@@ -85,7 +87,7 @@ export default {
           this.$store.commit("setFuncsSelectedInVis1",idxs)
         }
     }
-    
+
     for(let idx = 0;idx < idxs.length; idx++){
         this.funcSelected.push(rfunctions[idxs[idx]])
         let path = rfunctions[idxs[idx]].glyph
@@ -98,12 +100,12 @@ export default {
         if(this.isClicked[i])return
         var data = Papa.parse(tables[i]).data;
         let objArr = []
-    
+
         this.tableHead[i] = data[0]
         this.tableHead.sort(function(a,b){
           return true
         })
- 
+
         for(let row = 1;row < data.length;row++){
             let tempObj = {}
             for(let col = 0;col < data[0].length;col++){

@@ -32,12 +32,12 @@
                         <el-checkbox v-for="(v_opt,k_opt) in options[k_q]" :key="k_opt" :label="v_opt" border>{{v_opt}}</el-checkbox>
                     </el-checkbox-group>
                     <br>
-                </div> 
+                </div>
             </el-main>
       </el-container>
       <el-row style="text-align:center">
           <el-button round class="trainingBtn" style="background:yellow" @click="parsePage" border><span style="color:black">Parse</span></el-button>
-          <el-button round class="trainingBtn" style="background:green" @click="next" border><span style="color:black">Next</span></el-button>
+          <el-button round class="trainingBtn" type="success" @click="next" border><span style="color:black">Next</span></el-button>
       </el-row>
   </div>
 </template>
@@ -84,7 +84,7 @@ export default {
         this.clickCount = 0
         this.startTime = new Date().getTime()
         this.$store.commit("setVisualization2StartTime",this.startTime)
-      
+
         if(this.$store.state.scriptSelectedInVis2.length !== 0){
           idxs = this.$store.state.scriptSelectedInVis2
         }else{
@@ -92,9 +92,9 @@ export default {
           let scriptSelectedInBase2 = this.$store.state.scriptSelectedInBase2
           idxs = randomlySelect(Array.from(new Array(rscripts.length),(v,k) => k),scriptSelectedInTraining.concat(scriptSelectedInBase2),1)
           this.$store.commit("setScriptSelectedInVis2",idxs)
-        } 
+        }
     }
-  
+
     this.scriptSelected = idxs[0]
     this.rscript = rscripts[idxs[0]].rscript
     this.tableData = Array.from(new Array(tables[idxs[0]].length),()=>[])
@@ -109,16 +109,16 @@ export default {
         if(this.isClicked.length === 0){
             this.isClicked = Array.from(new Array(tables[this.scriptSelected].length),()=>false)
         }else if(this.isClicked[i] === true)return
-        
+
         var data = Papa.parse(tables[this.scriptSelected][i]).data;
 
         let objArr = []
-    
+
         this.tableHead[i] = data[0]
         this.tableHead.sort(function(a,b){
           return true
         })
- 
+
         for(let row = 1;row < data.length;row++){
             let tempObj = {}
             for(let col = 0;col < data[0].length;col++){
@@ -147,13 +147,13 @@ export default {
 
         console.log(this.$store.state.url)
         if(this.$store.state.url === '/visualization'){
-            this.$router.push('/base_sub1_training') 
+            this.$router.push('/base_sub1_training')
         }else{
-            this.$router.push('/survey') 
+            this.$router.push('/survey')
         }
     },
     addCount(){
-      this.clickCount += 1 
+      this.clickCount += 1
     }
   }
 }

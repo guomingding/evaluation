@@ -1,5 +1,27 @@
 <template>
   <div class="base_sub1_task">
+      <h2 align='center'>Task for Text</h2>
+      <hr class="bold"/>
+      <!--
+      <div>
+        <p>
+          该study task使用文本的方式来描述代码的数据清洗过程。
+        </p>
+        <p>
+          在此task中，我们为您提供两个子任务（5个不同的函数和1段程序脚本），分别位于两个页面中。
+        </p>
+        <p>
+          为了辅助您理解下面的函数及程序，然后完成相应的问题，我们还额外为您提供了数据清洗操作的输入表，以及函数的官方文档链接，在您需要时可以点击查阅。
+        </p>
+        <p>
+          任务中所有的问题都是多选题，您需要从中挑选出您认为一定正确的选项，如果不确定某个选项是否正确，则不选择它；如果任何选项都不确定，那此题可以一个都不选。
+        </p>
+        <p>
+          在您完成所有问题并确定不需要修改后，点击 <b>Next</b> 按钮以进入下一页。
+        </p>
+      </div>
+      <hr class="bold"/>
+      -->
       <el-container style="background:#DCDFE6;margin-bottom:50px" v-for="(v_q,k_q) in funcSelected" :key="k_q">
           <el-header height='25px'>
               <h2>{{k_q + 1}}</h2>
@@ -33,7 +55,7 @@
       </el-container>
       <el-row style="text-align:center">
           <el-button round class="trainingBtn" style="background:yellow" @click="parsePage" border><span style="color:black">Parse</span></el-button>
-          <el-button round class="trainingBtn" style="background:green" @click="next" border><span style="color:black">Next</span></el-button>
+          <el-button round class="trainingBtn" type="success" @click="next" border><span style="color:black">Next</span></el-button>
       </el-row>
   </div>
 </template>
@@ -83,7 +105,7 @@ export default {
           this.$store.commit("setFuncsSelectedInBase1",idxs)
         }
     }
-    
+
     console.log(idxs)
     for(let idx = 0;idx < idxs.length; idx++){
         this.funcSelected.push(rfunctions[idxs[idx]])
@@ -94,12 +116,12 @@ export default {
         if(this.isClicked[i])return
         var data = Papa.parse(tables[i]).data;
         let objArr = []
-    
+
         this.tableHead[i] = data[0]
         this.tableHead.sort(function(a,b){
           return true
         })
- 
+
         for(let row = 1;row < data.length;row++){
             let tempObj = {}
             for(let col = 0;col < data[0].length;col++){
@@ -123,7 +145,7 @@ export default {
         ans['baseline1_answers'] = Array.from(this.checkList)
         ans['baseline1_duration'] = new Date().getTime() - this.$store.state.baseline1StartTime
         ans['baselin1_click'] = this.clickCount
-        
+
         this.$store.commit("setBaseline1",ans)
         this.$router.push('/base_sub2_task')
     },

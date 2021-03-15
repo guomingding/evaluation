@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
+.history/
 # /dist/
 backend/data/*/data.json
 npm-debug.log*
