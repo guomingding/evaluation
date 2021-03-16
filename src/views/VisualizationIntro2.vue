@@ -1,5 +1,5 @@
 <template>
-  <div class="BaseInstroduction">
+  <div class="VisualizationIntro">
     <h2 align='center'>Introduction</h2>
     <hr class="bold"/>
     <div>
@@ -33,34 +33,44 @@
       <p>to fill</p>
     </div>
     -->
+
     <el-row>
-       <el-button round class="el-next" type="success" @click="toTraining"><span style="color:black">Next</span></el-button>
+      <el-button round class="el-next" type="success" @click="toTraining"><span style="color:black">Next</span></el-button>
     </el-row>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'BaseInstroduction',
-
+  name: 'VisualizationIntro',
   methods:{
     toTraining(){
-      this.$router.push('/base_sub1_training')
+      // this.$router.push('/vis_sub1_training')
+      if(this.$store.state.url === '/baseline_2' || this.$store.state.url === '/visualization_2'){
+        this.$router.push('/vis_sub2_training')
+      }
     }
   },
   mounted(){
-    this.$store.commit('setUrl',this.$route.path)
-    // this.$store.commit('setFuncsSelectedInTraining',[])
-    // this.$store.commit('setScriptSelectedInTraining',[])
+    // this.$store.commit('setUrl',this.$route.path)
+    // if(this.$route.path === '/visualization_1'){
+    //   this.$router.push('/vis_sub1_training')
+    // }else{
+    //   this.$router.push('/vis_sub2_training')
+    // }
+    if(this.$store.state.url === ''){
+      this.$store.commit('setUrl',this.$route.path)
+    }
+    
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .BaseInstroduction{
-    margin-left: 20%;
-    margin-right: 20%;
+  .VisualizationIntro{
+    margin-left: 10%;
+    margin-right: 10%;
   }
   .bold{
     border: 0;
@@ -71,4 +81,6 @@ export default {
   h3,p{
     text-align: left;
   }
+
+
 </style>

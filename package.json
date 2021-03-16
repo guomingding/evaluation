@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@panzoom/panzoom": "^4.3.2",
     "ant-design": "^1.0.0",
     "axios": "^0.21.1",
     "d3": "^6.5.0",

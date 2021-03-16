@@ -5,12 +5,22 @@
               <h2>R script</h2>
           </el-header>
           <el-main>
-            <p>{{rscript}}</p>
+            <p>library(dplyr)<br>
+bailey = read.csv("Energy-Poverty 32641 homes.csv")<br>
+landlords = dplyr::count(bailey, OWNERNME1, sort = TRUE)<br>
+landlords = subset(landlords, n>1)<br>
+by_owner = group_by(bailey, OWNERNME1)<br>
+utilities = dplyr::summarise(by_owner, cost = sum(Unit.Utilities.Cost))<br>
+ownercost = left_join(landlords, utilities, by = 'OWNERNME1')<br>
+ownercost = rename(ownercost, "num_properties"="n")<br>
+ownercost = mutate(ownercost, cost_per_property=cost / num_properties)<br>
+            </p>
                 <div v-for="(v_s,k_s) in tableData" :key="k_s">
                     <el-button @click="getTableData(k_s)" size='mini'>show table</el-button>
                     <el-table
                         :data="tableData[k_s]"
-                        style="width: 100%" :border="true">
+                        style="width: 100%" :border="true"
+                        max-height='500'>
                         <el-table-column
                             v-for="(v_t,k_t) in tableHead[k_s]"
                             :key="k_t"
@@ -24,14 +34,29 @@
                 <el-row>
                     <a v-for="(v_f,k_f) in rfuncs.name" :key="k_f" :href="rfuncs.refs[k_f]" style="margin-right:30px" @click="addClick" target="_blank">{{v_f}}</a>
                 </el-row>
-                <el-row style="background:white;margin-top:20px">{{rdesc}}</el-row>
+                <el-row style="background:white;margin-top:20px">bailey(L3): Create table from "Energy-Poverty 32641 homes.csv"<br>
+landlords(L4_1): Create n from COUNT(OWNERNME1) in bailey(L3)<br>
+landlords(L4_2): Sort rows by -n in landlords(L4_1)<br>
+landlords(L5): Keep rows where n>1 in landlords(L4_2)<br>
+by_owner(L6): Convert bailey(L3) into a grouped table by OWNERNME1<br>
+utilities(L7): Create cost from sum(Unit.Utilities.Cost) in by_owner(L6)<br>
+ownercost(L8): Left join with landlords(L5) and utilities(L7) on OWNERNME1==OWNERNME1<br>
+ownercost(L9): Rename n to "num_properties" in ownercost(L8)<br>
+ownercost(L10): Create cost_per_property from cost/num_properties in ownercost(L9)</el-row>
 
                 <div style="background:white;margin-top:20px"  v-for="(v_q,k_q) in questions" :key="v_q">
                     <el-row style="margin-bottom:10px">{{v_q}}</el-row>
                     <el-checkbox-group v-model="checkList[k_q]">
                         <el-checkbox v-for="(v_opt,k_opt) in options[k_q]" :key="k_opt" :label="v_opt" border>{{v_opt}}</el-checkbox>
                     </el-checkbox-group>
-                    <br>
+                </div>
+                <div style="background:white;margin-top:20px">
+                  <el-row>
+                    6. 您认为文本/可视化对解释这段程序的程度有多大？
+                  </el-row>
+                  <el-radio-group v-model="surveys[0]">
+                    <el-radio v-for="(seven_v1,seven_k1) in fiveTable" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
+                  </el-radio-group>
                 </div>
             </el-main>
       </el-container>
@@ -44,92 +69,70 @@
 
 <script>
 import {rscripts} from '@/assets/js/rscript'
-import {randomlySelect} from '@/assets/js/utils'
-import Papa from 'papaparse'
-import {tables} from '@/assets/data/scriptTables'
+import {Energy_Poverty} from '@/assets/data/Energy_Poverty'
 export default {
   name: 'BaseSub2_task',
   data () {
     return {
       clickCount:0,
       startTime:'',
-      scriptSelected:'',
-      rscript:'',
       rfuncs:{},
       rdesc:"",
-      tableData: [],
-      tableHead: [],
-      isClicked: [],
-      checkList: Array.from(new Array(4),()=>[]),
+      allTableData: [Energy_Poverty],
+      allTableHead: [Object.keys(Energy_Poverty[0])],
+      tableData: [[]],
+      tableHead: [[]],
+      isClicked: [false],
+      checkList: Array.from(new Array(5),()=>[]),
       questions:[
-          "q1","q2","q3","q4"
+          "1. utilities(L7) 是否是通过 landlords(L5)  做一步或多步操作得到的？",
+          "2. 从bailey(L3) 到 landlords(L5)，共经历多少步数据清洗操作？",
+          "3. 从 ownercost(L8)  到 ownercost(L10)，新增了哪些列？",
+          "4. 从程序执行开始，以下哪些表对生成 utilities(L7)  做了贡献？",
+          "5. 程序中哪些表多次（至少两次）作为数据清洗操作的输入表？"
       ],
       options:[
-        ["opt1_1","opt1_2","opt1_3","opt1_4"],
-        ["opt2_1","opt2_2","opt2_3","opt2_4"],
-        ["opt3_1","opt3_2","opt3_3","opt3_4"],
-        ["opt4_1","opt4_2","opt4_3","opt4_4"]
-      ]
+        ["a. 是","b. 否"],
+        ["a. 1","b. 2","c. 3","d. 4"],
+        ["a. OWNERNME1","b. n","c. Unit.Utilities.Cost","d. num_properties","e. cost_per_property "],
+        ["a. bailey(L3)","b. landlords(L4_1)","c. landlords(L4_2)","d. landlords(L5)","e. by_owner(L6)"],
+        ["a. bailey(L3)","b. landlords(L5)","c. by_owner(L6)","d. utilities(L7)","e. ownercost(L8)"],
+      ],
+      fiveTable:Array.from(new Array(5),(v,k) => k + 1),
+      surveys:new Array(1)
     }
   },
   mounted(){
-    let idxs = []
     if(localStorage.getItem("store")){
         this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(localStorage.getItem("store"))))
         this.startTime = this.$store.state.baseline2StartTime
         this.clickCount = this.$store.state.base2Click
-        idxs =  this.$store.state.scriptSelectedInBase2
         localStorage.removeItem("store")
     }else{
         this.clickCount = 0
         this.startTime = new Date().getTime()
         this.$store.commit("setBaseline2StartTime",this.startTime)
-
-        let scriptSelectedInTraining = this.$store.state.scriptSelectedInTraining
-        let scriptSelectedInVis2 = this.$store.state.scriptSelectedInVis2
-        if(this.$store.state.scriptSelectedInBase2.length !== 0){
-          idxs = this.$store.state.scriptSelectedInBase2
-        }else{
-          idxs = randomlySelect(Array.from(new Array(rscripts.length),(v,k) => k),scriptSelectedInTraining.concat(scriptSelectedInVis2),1)
-          this.$store.commit("setScriptSelectedInBase2",idxs)
-        }
     }
 
-    this.scriptSelected = idxs[0]
-    this.rscript = rscripts[idxs[0]].rscript
-    this.tableData = Array.from(new Array(tables[idxs[0]].length),()=>[])
-    this.tableHead = Array.from(new Array(tables[idxs[0]].length),()=>[])
-    this.rfuncs = rscripts[idxs[0]].functions
-    this.rdesc =  rscripts[idxs[0]].desc
+    this.rfuncs = rscripts[1].functions
+    this.rdesc =  rscripts[1].desc
+    this.fiveTable[0] = "1(没有用处)"
+    this.fiveTable[4] = "5(非常有用)"
   },
   methods:{
     getTableData(i){
-        //i是某一段脚本所涉及的所有tables中的第i个
-        if(this.isClicked.length === 0){
-            this.isClicked = Array.from(new Array(tables[this.scriptSelected].length),()=>false)
-        }else if(this.isClicked[i] === true)return
-
-        var data = Papa.parse(tables[this.scriptSelected][i]).data;
-
-        let objArr = []
-
-        this.tableHead[i] = data[0]
+       if(this.isClicked[i])return
+        this.tableHead[i] = this.allTableHead[i]
         this.tableHead.sort(function(a,b){
           return true
         })
 
-        for(let row = 1;row < data.length;row++){
-            let tempObj = {}
-            for(let col = 0;col < data[0].length;col++){
-                tempObj[data[0][col]] = data[row][col]
-            }
-            objArr.push(tempObj)
-        }
-        this.tableData[i] = objArr
+        this.tableData[i] = this.allTableData[i]
         this.tableData.sort(function(a,b){
           return true
         })
         this.isClicked[i] = true
+        this.addClick()
     },
 
     parsePage(){
@@ -142,11 +145,19 @@ export default {
         ans['baseline2_answers'] = Array.from(this.checkList)
         ans['baseline2_duration'] = new Date().getTime() - this.$store.state.baseline2StartTime
         ans['baseline2_click'] = this.clickCount
+        ans['baseline2_survey'] = this.surveys
         this.$store.commit("setBaseline2",ans)
-        if(this.$store.state.url === '/baseline'){
-            this.$router.push('/vis_sub1_training')
+        // if(this.$store.state.url === '/baseline'){
+        //     this.$router.push('/vis_sub1_training')
+        // }else{
+        //     this.$router.push('/survey')
+        // }
+         if(this.$store.state.url === '/baseline_2' || this.$store.state.url === '/visualization_2'){
+          this.$router.push('/base_sub1_task')
+        }else if(this.$store.state.url === '/baseline_1'){
+          this.$router.push('/visualization_1')
         }else{
-            this.$router.push('/survey')
+          this.$router.push('/survey')
         }
     },
     addClick(){
@@ -159,8 +170,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .base_sub2_task{
-    margin-left: 20%;
-    margin-right: 20%;
+    margin-left: 10%;
+    margin-right: 10%;
     text-align: left;
   }
 

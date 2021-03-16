@@ -29,7 +29,8 @@
                 <el-button @click="getTableData(k_q)" size='mini'>show table</el-button>
                 <el-table
                     :data="tableData[k_q]"
-                    style="width: 100%" :border="true">
+                    style="width: 100%" :border="true"
+                    max-height="500">
                     <el-table-column
                         v-for="(v_t,k_t) in tableHead[k_q]"
                         :key="k_t"
@@ -42,12 +43,13 @@
                 <!-- <el-row style="background:white">{{v_q.desc}}</el-row> -->
                 <img :src="picPaths[k_q]" alt=""/>
                 <div style="background:white;margin-top:20px">
-                    <el-row style="margin-bottom:10px">a question</el-row>
+                    <el-row style="margin-bottom:10px;">{{k_q + 1}}. 对于该函数所做的操作，以下说法正确的是：</el-row>
                     <el-checkbox-group v-model="checkList[k_q]" @change="showChoices">
-                        <el-checkbox label="a" border>option1</el-checkbox>
-                        <el-checkbox label="b" border>option2</el-checkbox>
-                        <el-checkbox label="c" border>option3</el-checkbox>
-                        <el-checkbox label="d" border style="margin-bottom:10px">option4</el-checkbox>
+                        <el-checkbox style="margin-bottom:10px; margin-left:5px;display:block" 
+                          v-for="(options_v,options_k) in options[k_q]"
+                          :key="options_k"
+                          :label="options_k"
+                        >{{options_v}}</el-checkbox><br>
                     </el-checkbox-group>
                 </div>
             </el-main>
@@ -61,67 +63,86 @@
 
 <script>
 import {rfunctions} from '@/assets/js/rfunc'
-import {randomlySelect} from '@/assets/js/utils'
-import Papa from 'papaparse'
-import {tables} from '@/assets/data/tableData'
+import {longley} from '@/assets/data/longley'
+import {women} from '@/assets/data/women'
+import {iris} from '@/assets/data/iris'
+import {trees} from '@/assets/data/trees'
+import {InsectSprays} from '@/assets/data/InsectSprays'
 export default {
   name: 'VisSub1_training',
   data () {
     return {
       picPaths:[],
       funcSelected:[],
-      tableData:Array.from(new Array(5),()=>[]),
-      tableHead:Array.from(new Array(5),()=>[]),
+      allTableData: [longley,women,iris,trees,InsectSprays],
+      allTableHead: [Object.keys(longley[0]),Object.keys(women[0]),Object.keys(iris[0]),Object.keys(trees[0]),Object.keys(InsectSprays[0])],
       isClicked: Array.from(new Array(5),()=>false),
-      checkList: Array.from(new Array(5),()=>[])
+      checkList: Array.from(new Array(5),()=>[]),
+      tableData: Array.from(new Array(5),()=>[]),
+      tableHead: Array.from(new Array(5),()=>[]),
+      options:[
+        [
+          "该操作不会使得输入表与输出表的行数发生变化",
+          "该操作不会使得输入表与输出表的列数发生变化",
+          "该操作将Unemployed列与Employed列相加，得到longley_mutate表中的people列",
+          "该操作将Unemployed列与Employed列做字符串拼接，得到longley_mutate表中的people列",
+          "以上说法都不对"
+        ],
+        [
+          "该操作不会使得输入表与输出表的行数发生变化",
+          "该操作不会使得输入表与输出表的列数发生变化",
+          "该操作选取women表中的第62, 130行",
+          "该操作在women表的基础上，创建一列，其内容为：62，130",
+          "该操作在women表的基础上，创建一行，其内容为：62，130",
+        ],
+        [
+          "将表中所有值为 'Petal.Length' 的单元格替换成 'petal_length'",
+          "筛选出Petal.Length列和petal_length列相等的行",
+          "将petal_length列重命名为Petal.Length",
+          "新建一列petal_length，其内容和Petal.Length列一致",
+          "以上说法都不对"
+        ],
+        [
+          "该操作不会使得输入表与输出表的列数发生变化",
+          "该操作删除Girth列",
+          "该操作只保留Girth列",
+          "trees_arrange表中Girth列可能存在值为8的单元格排在10的前面",
+          "以上说法都不对"
+        ],
+        [
+          "该操作不会使得输入表与输出表的行数发生变化",
+          "该操作不会使得输入表与输出表的列数发生变化",
+          "InsectSprays_unique表中一定没有重复的行",
+          "以上说法都不对"
+        ]
+      ]
     }
   },
   mounted(){
-    let idxs = []
     if(localStorage.getItem("store")){
       this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(localStorage.getItem("store"))))
-      idxs = this.$store.state.funcsSelectedInTraining
       localStorage.removeItem("store")
-    }else{
-      if(this.$store.state.funcsSelectedInTraining.length !== 0){
-        idxs = this.$store.state.funcsSelectedInTraining
-      }else{
-        let funcsInTraining = this.$store.state.funcsSelectedInTraining.length === 0 ? [] : this.$store.state.funcsSelectedInTraining
-        idxs = randomlySelect(Array.from(new Array(rfunctions.length),(v,k) => k),funcsInTraining,5)
-        this.$store.commit("setFuncsSelectedInTraining",idxs)
-      }
     }
-
-    for(let idx = 0;idx < idxs.length; idx++){
-        this.funcSelected.push(rfunctions[idxs[idx]])
-        let path = rfunctions[idxs[idx]].glyph
+    for(let idx = 0;idx < 5; idx++){
+        this.funcSelected.push(rfunctions[idx])
+        let path = rfunctions[idx].glyph
         this.picPaths.push(require("../assets/images/" + path))
     }
-
   },
   methods:{
     getTableData(i){
-        if(this.isClicked[i])return
-        var data = Papa.parse(tables[i]).data;
-        let objArr = []
-
-        this.tableHead[i] = data[0]
-        this.tableHead.sort(function(a,b){
-          return true
-        })
-        for(let row = 1;row < data.length;row++){
-            let tempObj = {}
-            for(let col = 0;col < data[0].length;col++){
-                tempObj[data[0][col]] = data[row][col]
-            }
-            console.log("tempObj: ",tempObj)
-            objArr.push(tempObj)
-        }
-        this.tableData[i] = objArr
-        this.tableData.sort(function(a,b){
-          return true
-        })
-        this.isClicked[i] = true
+      if(this.isClicked[i])return
+      // this.tableHead[.push](data[0])
+      this.tableHead[i] = this.allTableHead[i]
+      this.tableHead.sort(function(a,b){
+        return true
+      })
+      // this.tableData.push(objArr)
+      this.tableData[i] = this.allTableData[i]
+      this.tableData.sort(function(a,b){
+        return true
+      })
+      this.isClicked[i] = true
     },
     showChoices(){
         console.log(this.checkList)
@@ -131,7 +152,12 @@ export default {
       this.$router.go(0)
     },
     next(){
-        this.$router.push('/vis_sub2_training')
+        // this.$router.push('/vis_sub2_training')
+        if(this.$store.state.url === '/baseline_1' || this.$store.state.url === '/visualization_1'){
+          this.$router.push('/vis_sub2_training')
+        }else{
+          this.$router.push('/vis_sub2_task')
+        }
     },
   }
 }
@@ -140,8 +166,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .vis_sub1_training{
-    margin-left: 20%;
-    margin-right: 20%;
+    margin-left: 10%;
+    margin-right: 10%;
     text-align: left;
   }
 

@@ -45,11 +45,16 @@ export default {
   name: 'VisualizationIntro',
   methods:{
     toTraining(){
-      this.$router.push('/vis_sub1_training')
+      // this.$router.push('/vis_sub1_training')
+      if(this.$store.state.url === '/baseline_1' || this.$store.state.url === '/visualization_1'){
+        this.$router.push('/vis_sub1_training')
+      }
     }
   },
   mounted(){
-    this.$store.commit('setUrl',this.$route.path)
+    if(this.$store.state.url === ''){
+      this.$store.commit('setUrl',this.$route.path)
+    }
   }
 }
 </script>
@@ -57,8 +62,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .VisualizationIntro{
-    margin-left: 20%;
-    margin-right: 20%;
+    margin-left: 10%;
+    margin-right: 10%;
   }
   .bold{
     border: 0;

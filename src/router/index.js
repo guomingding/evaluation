@@ -11,8 +11,10 @@ import VisSub2_training from '@/views/VisSub2_training'
 import VisSub1_task from '@/views/VisSub1_task'
 import VisSub2_task from '@/views/VisSub2_task'
 
-import BaselineIntro from '@/views/BaselineIntro'
-import VisualizationIntro from '@/views/VisualizationIntro'
+import BaselineIntro1 from '@/views/BaselineIntro1'
+import BaselineIntro2 from '@/views/BaselineIntro2'
+import VisualizationIntro1 from '@/views/VisualizationIntro1'
+import VisualizationIntro2 from '@/views/VisualizationIntro2'
 
 import Questionnaire from '@/views/Questionnaire'
 
@@ -26,14 +28,24 @@ export default new Router({
       component:BaseSub1_training
     },
     {
-      path:'/baseline',
-      name:'BaselineIntro',
-      component:BaselineIntro
+      path:'/baseline_1',
+      name:'BaselineIntro1',
+      component:BaselineIntro1
     },
     {
-      path:'/visualization',
-      name:'VisualizationIntro',
-      component:VisualizationIntro
+      path:'/baseline_2',
+      name:'BaselineIntro2',
+      component:BaselineIntro2
+    },
+    {
+      path:'/visualization_1',
+      name:'VisualizationIntro1',
+      component:VisualizationIntro1
+    },
+    {
+      path:'/visualization_2',
+      name:'VisualizationIntro2',
+      component:VisualizationIntro2
     },
     {
       path:'/base_sub1_training',
