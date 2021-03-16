@@ -61,6 +61,9 @@
         <el-row>
           数据清洗经验（Experience in Data Wrangling）:<input type="text" class="inputBox" v-model="DW_Experience"/>
         </el-row>
+        <el-row>
+          <el-button round class="el-next" type="success" @click="submit"><span style="color:black">Next</span></el-button>
+        </el-row>
   </div>
 </template>
 
@@ -96,10 +99,12 @@ export default {
     // },
     submit(){
       //只能提交一次
+      console.log("clicked")
       if(this.submitTimes !== 0){
         alert("already submitted!")
         return
       }
+
       let data = {}
       data['survey'] = this.answers
       data["suggestion"] = this.suggestion
