@@ -4,16 +4,14 @@ const rscripts = [
         functions:{
             name:['read.csv','unique','rename','group_by','mutate','ungroup','rbind','arrange'],
             refs:[
-                ///////////
-                'https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/mutate',
+                'https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.table',
                 'https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/unique',
-                'https://www.rdocumentation.org/packages/reshape/versions/0.8.8/topics/rename',
-                'https://www.rdocumentation.org/packages/ggvis/versions/0.4.7/topics/group_by',
+                'https://www.rdocumentation.org/packages/plyr/versions/1.8.6/topics/rename',
+                'https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/group_by',
                 'https://www.rdocumentation.org/packages/plyr/versions/1.8.6/topics/mutate',
                 'https://www.rdocumentation.org/packages/tidylog/versions/1.0.2/topics/ungroup',
-                //////////
-                'https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/mutate',
-                'https://www.rdocumentation.org/packages/plyr/versions/1.8.6/topics/arrange',
+                'https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cbind',
+                'https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/arrange',
             ]
         },
         desc:"a description of script",
@@ -23,15 +21,14 @@ const rscripts = [
         functions:{
             name:['read.csv','count','subset','group_by','summarise','sum','inner_join','rename','mutate'],
             refs:[
-                //////////
-                'https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/mutate',
+                'https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.table',
                 'https://www.rdocumentation.org/packages/plyr/versions/1.8.6/topics/count',
                 'https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/subset',
-                'https://www.rdocumentation.org/packages/ggvis/versions/0.4.7/topics/group_by',
-                'https://www.rdocumentation.org/packages/spatsurv/versions/1.5/topics/Summarise',
+                'https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/group_by',
+                'https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/summarise',
                 'https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/sum',
-                'https://www.rdocumentation.org/packages/sparklyr/versions/1.6.0/topics/inner_join',
-                'https://www.rdocumentation.org/packages/reshape/versions/0.8.8/topics/rename',
+                'https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/join',
+                'https://www.rdocumentation.org/packages/plyr/versions/1.8.6/topics/rename',
                 'https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/mutate',
             ]
         },
@@ -42,14 +39,13 @@ const rscripts = [
         functions:{
             name:['read.csv','distinct','group_by','mutate','row_number','filter','select','merge'],
             refs:[
-                ///////
-                'https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/mutate',
-                'https://www.rdocumentation.org/packages/sparklyr/versions/1.6.0/topics/distinct',
-                'https://www.rdocumentation.org/packages/ggvis/versions/0.4.7/topics/group_by',
+                'https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.table',
+                'https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/distinct',
+                'https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/group_by',
                 'https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/mutate',
                 'https://www.rdocumentation.org/packages/tidytable/versions/0.5.9/topics/row_number.',
-                'https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/filter',
-                'https://www.rdocumentation.org/packages/sparklyr/versions/1.6.0/topics/select',
+                'https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/filter',
+                'https://www.rdocumentation.org/packages/dplyr/versions/0.7.8/topics/select',
                 'https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/merge',
             ]
         },
