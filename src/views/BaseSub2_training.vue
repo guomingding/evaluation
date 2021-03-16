@@ -7,6 +7,7 @@
           <el-main>
             <p>
 library(dplyr)<br>
+<br>
 warpbreaks = read.csv("warpbreaks.csv")<br>
 warpbreaks = unique(warpbreaks)<br>
 wb_tens = rename(warpbreaks, tens=tension)<br>

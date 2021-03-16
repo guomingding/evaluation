@@ -6,6 +6,7 @@
           </el-header>
           <el-main>
             <p>library(dplyr)<br>
+<br>
 bailey = read.csv("Energy-Poverty 32641 homes.csv")<br>
 landlords = dplyr::count(bailey, OWNERNME1, sort = TRUE)<br>
 landlords = subset(landlords, n>1)<br>
