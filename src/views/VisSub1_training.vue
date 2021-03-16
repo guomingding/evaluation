@@ -41,7 +41,8 @@
                 </el-table>
                 <h3><a :href="v_q.ref" target="_blank">{{v_q.name}}</a></h3>
                 <!-- <el-row style="background:white">{{v_q.desc}}</el-row> -->
-                <img :src="picPaths[k_q]" alt=""/>
+                <!-- <img :src="picPaths[k_q]" alt=""/> -->
+                <div v-html="svgsToShow[k_q]"></div>
                 <div style="background:white;margin-top:20px">
                     <el-row style="margin-bottom:10px;">{{k_q + 1}}. 对于该函数所做的操作，以下说法正确的是：</el-row>
                     <el-checkbox-group v-model="checkList[k_q]" @change="showChoices">
@@ -68,6 +69,7 @@ import {women} from '@/assets/data/women'
 import {iris} from '@/assets/data/iris'
 import {trees} from '@/assets/data/trees'
 import {InsectSprays} from '@/assets/data/InsectSprays'
+import {trainingSvg} from '@/assets/js/vis_training1_svgs'
 export default {
   name: 'VisSub1_training',
   data () {
@@ -115,10 +117,12 @@ export default {
           "InsectSprays_unique表中一定没有重复的行",
           "以上说法都不对"
         ]
-      ]
+      ],
+      svgsToShow:[]
     }
   },
   mounted(){
+    this.svgsToShow = trainingSvg
     if(localStorage.getItem("store")){
       this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(localStorage.getItem("store"))))
       localStorage.removeItem("store")

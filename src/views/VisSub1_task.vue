@@ -26,7 +26,8 @@
                 </el-table>
                 <h3><a :href="v_q.ref" @click="addCount" target="_blank">{{v_q.name}}</a></h3>
                 <!-- <el-row style="background:white">{{v_q.desc}}</el-row> -->
-                <img :src="picPaths[k_q]" alt=""/>
+                <!-- <img :src="picPaths[k_q]" alt=""/> -->
+                <div v-html="svgsToShow[k_q]"></div>
                 <div style="background:white;margin-top:20px">
                     <el-row style="margin-bottom:10px;">1. 对于该函数所做的操作，以下说法正确的是：</el-row>
                     <el-checkbox-group v-model="checkList[k_q]">
@@ -59,6 +60,7 @@ import {USArrests} from '@/assets/data/USArrests'
 import {t1} from '@/assets/data/t1'
 import {t2} from '@/assets/data/t2'
 import {sleep} from '@/assets/data/sleep'
+import {sub1Svgs} from '@/assets/js/vis_sub1_svgs'
 
 export default {
   name: 'VisSub1_task',
@@ -74,8 +76,7 @@ export default {
       tableHead: Array.from(new Array(5),()=>[]),
       isClicked: Array.from(new Array(5),()=>false),
       checkList: Array.from(new Array(5),()=>[]),
-      
-      picPaths: [],
+
       options:[
         [
           '该操作不会使得输入表与输出表的行数发生变化',
@@ -113,11 +114,13 @@ export default {
         ]
       ],
       fiveTable:Array.from(new Array(5),(v,k) => k + 1),
-      surveys:new Array(5)
+      surveys:new Array(5),
+      svgsToShow:[]
     }
   },
   mounted(){
     //要考虑到刷新页面的情况
+    this.svgsToShow = sub1Svgs
     if(localStorage.getItem("store")){
       this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(localStorage.getItem("store"))))
       this.startTime = this.$store.state.visualization1StartTime
@@ -131,8 +134,6 @@ export default {
 
     for(let idx = 10;idx < 15;idx ++){
       this.funcSelected.push(rfunctions[idx])
-      let path = rfunctions[idx].glyph
-      this.picPaths.push(require("../assets/images/" + path))
     }
 
     this.fiveTable[0] = "1(没有用处)"

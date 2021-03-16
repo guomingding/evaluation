@@ -35,9 +35,10 @@ wb_sort = arrange(wb_l, -breaks)<br>
                 <el-row>
                     <a v-for="(v_f,k_f) in rfuncs.name" :key="k_f" :href="rfuncs.refs[k_f]" style="margin-right:30px" target="_blank">{{v_f}}</a>
                 </el-row>
-                <!-- <el-row style="background:white;margin-top:20px">{{rdesc}}</el-row> -->
-                <!-- <img :src="picPath" id="mainsvg"/> -->
-                <img src="@/assets/images/program_training.svg" id="mainsvg"/>
+
+                <div style="height:300"> 
+                  <div v-html="svgToShow" id="mainsvg" ></div>
+                </div>
                
                 <div style="background:white;margin-top:20px"  v-for="(v_q,k_q) in questions" :key="v_q">
                     <el-row style="margin-bottom:10px">{{v_q}}</el-row>
@@ -77,11 +78,11 @@ wb_sort = arrange(wb_l, -breaks)<br>
 import {rscripts} from '@/assets/js/rscript'
 import {warpbreaks} from '@/assets/data/warpbreaks'
 import Panzoom from '@panzoom/panzoom'
+import {traingSvg} from '@/assets/js/vis_training2_svg'
 export default {
   name: 'VisSub2_training',
   data () {
     return {
-      picPath:'',
       rfuncs:{},
       rdesc:"",
       allTableData: [warpbreaks],
@@ -105,7 +106,8 @@ export default {
         ["a. warpbreaks(L3)","b. warpbreaks(L4)","c. wb_tens(L5)","d. wb_tens(L6)","e. wb_tens_r(L9)"],
       ],
       sevenTable:Array.from(new Array(7),(v,k) => k + 1),
-      surveys:new Array(2)
+      surveys:new Array(2),
+      svgToShow:''
     }
   },
   mounted(){
@@ -116,9 +118,10 @@ export default {
     }
     this.rfuncs = rscripts[0].functions
     this.rdesc =  rscripts[0].desc
-    let path = rscripts[0].glyph
+    // let path = rscripts[0].glyph
     // this.picPath = require("../assets/images/" + path)
-    this.picPath = "@/assets/images/" + path
+    // this.picPath = "@/assets/images/" + path
+    this.svgToShow = traingSvg[0]
 
     const elem = document.getElementById("mainsvg")
     const panzoom = Panzoom(elem, {

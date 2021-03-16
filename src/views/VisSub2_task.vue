@@ -35,8 +35,8 @@ fy2018 = merge(fy2018, overtime.names.2018, by = 'emplid', all = T)<br>
                     <a v-for="(v_f,k_f) in rfuncs.name" :key="k_f" :href="rfuncs.refs[k_f]" style="margin-right:30px" @click="addCount" target="_blank">{{v_f}}</a>
                 </el-row>
                 <!-- <el-row style="background:white;margin-top:20px">{{rdesc}}</el-row> -->
-                <div height="500">
-                  <img :src="picPath" id="mainsvg" />
+                <div style="height:300">
+                  <div v-html="svgToShow" id="mainsvg"></div>
                 </div>
                 <div style="background:white;margin-top:20px"  v-for="(v_q,k_q) in questions" :key="v_q">
                     <el-row style="margin-bottom:10px">{{v_q}}</el-row>
@@ -66,12 +66,12 @@ fy2018 = merge(fy2018, overtime.names.2018, by = 'emplid', all = T)<br>
 import {rscripts} from '@/assets/js/rscript'
 import {fy2018} from '@/assets/data/fy2018'
 import Panzoom from '@panzoom/panzoom'
+import {sub2Svg} from '@/assets/js/vis_sub2_svg'
 export default {
   name: 'BaseSub2_task',
   data () {
     return {
       rfuncs:{},
-      picPath:"",
       allTableData: [fy2018],
       allTableHead: [Object.keys(fy2018[0])],
       tableData: [[]],
@@ -93,10 +93,12 @@ export default {
         ["a. fy2018(L3)","b. fy_overtime(L4)","c. fy_overtime(L6)","d. overtime.names.2018(L8)","e. overtime.names.2018(L9_1)"],
       ],
       fiveTable:Array.from(new Array(5),(v,k) => k + 1),
-      surveys:new Array(1)
+      surveys:new Array(1),
+      svgToShow:''
     }
   },
   mounted(){
+    this.svgToShow = sub2Svg[0]
     if(localStorage.getItem("store")){
         this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(localStorage.getItem("store"))))
         this.startTime = this.$store.state.visualization2StartTime
@@ -109,9 +111,7 @@ export default {
     }
 
     this.rfuncs = rscripts[2].functions
-    let path = rscripts[2].glyph
-    this.picPath = require("../assets/images/" + path)
-
+  
     const elem = document.getElementById("mainsvg")
     const panzoom = Panzoom(elem, {
       maxScale: 10
