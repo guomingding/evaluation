@@ -5,6 +5,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state:{
         url:'',
+        userInf:{},
         baseline1:[],
         baseline2:[],
         visualization1:[],
@@ -31,6 +32,9 @@ const store = new Vuex.Store({
     mutations:{
         setUrl(state,url){
             state.url = url
+        },
+        setUserInf(state,inf){
+            state.userInf = inf
         },
         setBaseline1(state,ans1){
             state.baseline1 = ans1

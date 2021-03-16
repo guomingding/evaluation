@@ -1,6 +1,6 @@
 <template>
   <div class="base_sub2_training">
-      <el-container style="background:#DCDFE6;margin-bottom:50px">
+      <el-container style="margin-bottom:50px">
           <el-header height='25px'>
               <h2>R script</h2>
           </el-header>
@@ -18,25 +18,7 @@ wb_tens_r = mutate(wb_tens, rate=breaks/count)<br>
 wb_l = rbind(warpbreaks, list(70, 'A', 'L'))<br>
 wb_sort = arrange(wb_l, -breaks)<br>
             </p>
-                <div v-for="(v_s,k_s) in tableData" :key="k_s">
-                    <el-button @click="getTableData(k_s)" size='mini'>show table</el-button>
-                    <el-table
-                        :data="tableData[k_s]"
-                        style="width: 100%" :border="true"
-                        max-height="500">
-                        <el-table-column
-                            v-for="(v_t,k_t) in tableHead[k_s]"
-                            :key="k_t"
-                            :label="v_t"
-                            :prop="v_t"
-                            >
-                        </el-table-column>
-                    </el-table>
-                </div>
-                <br>
-                <el-row>
-                    <a v-for="(v_f,k_f) in rfuncs.name" :key="k_f" :href="rfuncs.refs[k_f]" style="margin-right:30px" target="_blank">{{v_f}}</a>
-                </el-row>
+              
                 <el-row style="background:white;margin-top:20px">warpbreaks(L3): Create table from "warpbreaks.csv"<br>
 warpbreaks(L4): Remove duplicate rows in warpbreaks(L3)<br>
 wb_tens(L5): Rename tension to "tens" in warpbreaks(L4)<br>
@@ -55,27 +37,46 @@ wb_sort(L11): Sort rows by -breaks in wb_l(L10)<br>
                     </el-checkbox-group>
                     <br>
                 </div>
+
+                  <div v-for="(v_s,k_s) in tableData" :key="k_s" style="margin-top:20px">
+                  <el-button @click="getTableData(k_s)" size='mini'>show table</el-button>
+                  <el-table
+                      :data="tableData[k_s]"
+                      style="width: 100%" :border="true"
+                      max-height="500">
+                      <el-table-column
+                          v-for="(v_t,k_t) in tableHead[k_s]"
+                          :key="k_t"
+                          :label="v_t"
+                          :prop="v_t"
+                          >
+                      </el-table-column>
+                  </el-table>
+                </div>
+                <br>
+                <el-row>
+                    <a v-for="(v_f,k_f) in rfuncs.name" :key="k_f" :href="rfuncs.refs[k_f]" style="margin-right:30px" target="_blank">{{v_f}}</a>
+                </el-row>
                
             </el-main>
       </el-container>
-      <div style="background:#DCDFE6;margin-bottom:30px">
+      <div style="margin-bottom:30px">
         <el-row>
-          6. 您认为文本/可视化对您完成这段程序对应的问题有多大帮助？
+          6. 您认为文本对您完成这段程序对应的问题有多大帮助？
         </el-row>
         <el-radio-group v-model="surveys[0]">
           <el-radio v-for="(seven_v1,seven_k1) in sevenTable1" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
         </el-radio-group>
         
         <el-row>
-          7. 您认为文本/可视化对解释这段程序的程度有多大？
+          7. 您认为文本对解释这段程序的精确性有多高？
         </el-row>
         <el-radio-group v-model="surveys[1]">
           <el-radio v-for="(seven_v1,seven_k1) in sevenTable2" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
         </el-radio-group>
       </div>
       <el-row style="text-align:center">
-          <el-button round class="trainingBtn" style="background:yellow" @click="parsePage" border><span style="color:black">Parse</span></el-button>
-          <el-button round class="trainingBtn" type="success" @click="next" border><span style="color:black">Next</span></el-button>
+        <el-button round class="trainingBtn" type="success" @click="next" border><span style="color:black">Next</span></el-button>
       </el-row>
   </div>
 </template>
@@ -109,8 +110,8 @@ export default {
         ["a. warpbreaks(L4)","b. wb_tens(L5)","c. wb_tens(L6)","d. wb_tens(L7)","e. wb_tens_r(L9)"],
         ["a. warpbreaks(L3)","b. warpbreaks(L4)","c. wb_tens(L5)","d. wb_tens(L6)","e. wb_tens_r(L9)"],
       ],
-      sevenTable1:Array.from(new Array(5),(v,k) => k + 1),
-      sevenTable2:Array.from(new Array(5),(v,k) => k + 1),
+      sevenTable1:Array.from(new Array(7),(v,k) => k + 1),
+      sevenTable2:Array.from(new Array(7),(v,k) => k + 1),
       surveys:new Array(2)
     }
   },
@@ -123,8 +124,8 @@ export default {
     this.rdesc =  rscripts[0].desc
     this.sevenTable1[0] = "1(没有用处)"
     this.sevenTable1[6] = "7(非常有用)"
-    this.sevenTable2[0] = "1(没有解释清楚)"
-    this.sevenTable2[6] = "7(解释得十分清楚)"
+    this.sevenTable2[0] = "1(精确性低)"
+    this.sevenTable2[6] = "7(精确性高)"
   },
   methods:{
     getTableData(i){

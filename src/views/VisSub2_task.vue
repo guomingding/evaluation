@@ -1,6 +1,6 @@
 <template>
   <div class="vis_sub2_task">
-      <el-container style="background:#DCDFE6;margin-bottom:50px">
+      <el-container style="margin-bottom:50px">
           <el-header height='25px'>
               <h2>R script</h2>
           </el-header>
@@ -16,7 +16,20 @@ overtime.names.2018 = filter(fy_overtime, n == 1)<br>
 overtime.names.2018 = select(overtime.names.2018, emplid, name.standardized = name)<br>
 fy2018 = merge(fy2018, overtime.names.2018, by = 'emplid', all = T)<br>
           </p>
-              <div v-for="(v_s,k_s) in tableData" :key="k_s">
+              
+                <!-- <el-row style="background:white;margin-top:20px">{{rdesc}}</el-row> -->
+                <div style="height:300">
+                  <div v-html="svgToShow" id="mainsvg"></div>
+                </div>
+                <div style="background:white;margin-top:20px"  v-for="(v_q,k_q) in questions" :key="v_q">
+                    <el-row style="margin-bottom:10px">{{v_q}}</el-row>
+                    <el-checkbox-group v-model="checkList[k_q]">
+                        <el-checkbox v-for="(v_opt,k_opt) in options[k_q]" :key="k_opt" :label="v_opt" border>{{v_opt}}</el-checkbox>
+                    </el-checkbox-group>
+                    <br>
+                </div>
+
+                <div v-for="(v_s,k_s) in tableData" :key="k_s" style="margin-top:20px">
                   <el-button @click="getTableData(k_s)" size='mini'>show table</el-button>
                   <el-table
                       :data="tableData[k_s]"
@@ -35,37 +48,25 @@ fy2018 = merge(fy2018, overtime.names.2018, by = 'emplid', all = T)<br>
                 <el-row>
                     <a v-for="(v_f,k_f) in rfuncs.name" :key="k_f" :href="rfuncs.refs[k_f]" style="margin-right:30px" @click="addCount" target="_blank">{{v_f}}</a>
                 </el-row>
-                <!-- <el-row style="background:white;margin-top:20px">{{rdesc}}</el-row> -->
-                <div style="height:300">
-                  <div v-html="svgToShow" id="mainsvg"></div>
-                </div>
-                <div style="background:white;margin-top:20px"  v-for="(v_q,k_q) in questions" :key="v_q">
-                    <el-row style="margin-bottom:10px">{{v_q}}</el-row>
-                    <el-checkbox-group v-model="checkList[k_q]">
-                        <el-checkbox v-for="(v_opt,k_opt) in options[k_q]" :key="k_opt" :label="v_opt" border>{{v_opt}}</el-checkbox>
-                    </el-checkbox-group>
-                    <br>
-                </div>
             </el-main>
       </el-container>
-      <div style="background:#DCDFE6;margin-bottom:30px">
+      <div style="margin-bottom:30px">
         <el-row>
-          6. 您认为文本/可视化对您完成这段程序对应的问题有多大帮助？
+          6. 您认为可视化对您完成这段程序对应的问题有多大帮助？
         </el-row>
         <el-radio-group v-model="surveys[0]">
           <el-radio v-for="(seven_v1,seven_k1) in sevenTable1" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
         </el-radio-group>
         
         <el-row>
-          7. 您认为文本/可视化对解释这段程序的程度有多大？
+          7. 您认为可视化对解释这段程序的精确性有多高？
         </el-row>
         <el-radio-group v-model="surveys[1]">
           <el-radio v-for="(seven_v1,seven_k1) in sevenTable2" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
         </el-radio-group>
       </div>
       <el-row style="text-align:center">
-          <el-button round class="trainingBtn" style="background:yellow" @click="parsePage" border><span style="color:black">Parse</span></el-button>
-          <el-button round class="trainingBtn" type="success" @click="next" border><span style="color:black">Next</span></el-button>
+         <el-button round class="trainingBtn" type="success" @click="next" border><span style="color:black">Next</span></el-button>
       </el-row>
   </div>
 </template>
@@ -100,8 +101,8 @@ export default {
         ["a. fy_overtime(L4)","b. fy_overtime(L5)","c. fy_overtime(L6)","d. fy_overtime(L7)","e. overtime.names.2018(L9_2)"],
         ["a. fy2018(L3)","b. fy_overtime(L4)","c. fy_overtime(L6)","d. overtime.names.2018(L8)","e. overtime.names.2018(L9_1)"],
       ],
-      sevenTable1:Array.from(new Array(5),(v,k) => k + 1),
-      sevenTable2:Array.from(new Array(5),(v,k) => k + 1),
+      sevenTable1:Array.from(new Array(7),(v,k) => k + 1),
+      sevenTable2:Array.from(new Array(7),(v,k) => k + 1),
       surveys:new Array(2),
       svgToShow:''
     }
@@ -129,10 +130,10 @@ export default {
     // panzoom.zoom(1, { animate: true })
     elem.parentElement.addEventListener('wheel', panzoom.zoomWithWheel)
 
-     this.sevenTable1[0] = "1(没有用处)"
+    this.sevenTable1[0] = "1(没有用处)"
     this.sevenTable1[6] = "7(非常有用)"
-    this.sevenTable2[0] = "1(没有解释清楚)"
-    this.sevenTable2[6] = "7(解释得十分清楚)"
+    this.sevenTable2[0] = "1(精确性低)"
+    this.sevenTable2[6] = "7(精确性高)"
   },
  
   methods:{
@@ -149,7 +150,7 @@ export default {
           return true
         })
         this.isClicked[i] = true
-        this.addClick()
+        this.addCount()
     },
 
     parsePage(){
@@ -172,7 +173,7 @@ export default {
       }else if(this.$store.state.url === '/baseline_1'){
         this.$router.push('/survey')
       }else{
-        this.$router.push('/baseline_1')
+        this.$router.push('/base_sub1_training')
       }
     },
     addCount(){

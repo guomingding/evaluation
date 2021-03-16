@@ -13,26 +13,24 @@
         在完成两个study tasks之后，我们将为您提供一份问卷调查，并收集您的一些基本信息。
       </p>
     </div>
-    <!--
-    <div class="introduction">
-      <h3>Introduction</h3>
-      <hr/>
-      <p>to fill</p>
-      <img src="@/assets/images/logo.png" alt=""/>
-    </div>
-    <hr class="bold"/>
-    <div class="env">
-      <h3>Code Environment</h3>
-      <hr/>
-      <p>to fill</p>
-    </div>
-    <hr class="bold"/>
-    <div class="kw">
-      <h3>Keywords</h3>
-      <hr/>
-      <p>to fill</p>
-    </div>
-    -->
+    <h2>Demographic Information</h2>
+
+    <p>姓名（Name）：</p><input type="text" class="inputBox" v-model="name"/><br><br>
+    
+    <p>性别（Gender）：</p>
+      <el-radio v-model="gender" label="1">男</el-radio>
+      <el-radio v-model="gender" label="2">女</el-radio><br><br>
+    
+    <p>年龄（Age）：</p><input type="text" class="inputBox" v-model="age"/><br><br>
+    
+    <p>邮箱（Email）：</p><input type="text" class="inputBox" v-model="Email"/><br><br>
+    
+    <p>职位（Position）：（例如 2nd year PhD student, faculty, analyst等）</p><input type="text" class="inputBox" v-model="Position"/><br><br>
+    
+    <p>编程经验（Programming Experience）：</p><input type="text" class="inputBox" v-model="Programming_Experience"/><br><br>
+    
+    <p>数据清洗经验（Experience in Data Wrangling）:</p><input type="text" class="inputBox" v-model="DW_Experience"/><br><br>
+    
     <el-row>
        <el-button round class="el-next" type="success" @click="toTraining"><span style="color:black">Next</span></el-button>
     </el-row>
@@ -42,19 +40,35 @@
 <script>
 export default {
   name: 'BaseInstroduction',
-
+  data(){
+    return{
+      name:'',
+      gender:'',
+      age:'',
+      Email:'',
+      Position:'',
+      Programming_Experience:'',
+      DW_Experience:'',
+    }
+  },
   methods:{
     toTraining(){
-      // this.$router.push('/base_sub1_training')
-      if(this.$store.state.url === '/baseline_1' || this.$store.state.url === '/visualization_1'){
-        this.$router.push('/base_sub1_training')
-      }
+      let selfInf = {}
+      selfInf['name'] = this.name
+      selfInf['gender'] = this.gender
+      selfInf['age'] = this.age
+      selfInf['email'] = this.Email
+      selfInf['position'] = this.Position
+      selfInf['Programming_Experience'] = this.Programming_Experience
+      selfInf['DW_Experience'] = this.DW_Experience
+      this.$store.commit("setUserInf",selfInf)
+      
+      this.$router.push('/base_sub1_training')
+      
     }
   },
   mounted(){
-    if(this.$store.state.url === ''){
-      this.$store.commit('setUrl',this.$route.path)
-    }
+    this.$store.commit('setUrl',this.$route.path)
   }
 }
 </script>
@@ -73,5 +87,16 @@ export default {
 
   h3,p{
     text-align: left;
+  }
+
+  .inputBox{
+    width: 100%;
+    float: left;
+    border: #878787;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 2px;
+    border-style: solid;
   }
 </style>
