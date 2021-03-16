@@ -54,6 +54,21 @@
                 </div>
             </el-main>
       </el-container>
+       <div style="background:#DCDFE6;margin-bottom:30px">
+        <el-row>
+          6. 您认为文本/可视化对您完成这些函数对应的问题有多大帮助？
+        </el-row>
+        <el-radio-group v-model="surveys[0]">
+          <el-radio v-for="(seven_v1,seven_k1) in sevenTable1" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
+        </el-radio-group>
+        
+        <el-row>
+          7. 您认为文本/可视化对解释这些函数的程度有多大？
+        </el-row>
+        <el-radio-group v-model="surveys[1]">
+          <el-radio v-for="(seven_v1,seven_k1) in sevenTable2" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
+        </el-radio-group>
+      </div>
       <el-row style="text-align:center">
           <el-button round class="trainingBtn" style="background:yellow" @click="parsePage" border><span style="color:black">Parse</span></el-button>
           <el-button round class="trainingBtn" type="success" @click="next" border><span style="color:black">Next</span></el-button>
@@ -115,11 +130,18 @@ export default {
           "InsectSprays_unique表中一定没有重复的行",
           "以上说法都不对"
         ]
-      ]
+      ],
+      sevenTable1:Array.from(new Array(5),(v,k) => k + 1),
+      sevenTable2:Array.from(new Array(5),(v,k) => k + 1),
+      surveys:new Array(2)
     }
   },
 
   mounted(){
+    this.sevenTable1[0] = "1(没有用处)"
+    this.sevenTable1[6] = "7(非常有用)"
+    this.sevenTable2[0] = "1(没有解释清楚)"
+    this.sevenTable2[6] = "7(解释得十分清楚)"
     for(let idx = 0;idx < 5;idx ++){
       this.funcSelected.push(rfunctions[idx])
     }

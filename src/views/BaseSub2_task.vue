@@ -50,16 +50,23 @@ ownercost(L10): Create cost_per_property from cost/num_properties in ownercost(L
                         <el-checkbox v-for="(v_opt,k_opt) in options[k_q]" :key="k_opt" :label="v_opt" border>{{v_opt}}</el-checkbox>
                     </el-checkbox-group>
                 </div>
-                <div style="background:white;margin-top:20px">
-                  <el-row>
-                    6. 您认为文本/可视化对解释这段程序的程度有多大？
-                  </el-row>
-                  <el-radio-group v-model="surveys[0]">
-                    <el-radio v-for="(seven_v1,seven_k1) in fiveTable" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
-                  </el-radio-group>
-                </div>
             </el-main>
       </el-container>
+      <div style="background:#DCDFE6;margin-bottom:30px">
+        <el-row>
+          6. 您认为文本/可视化对您完成这段程序对应的问题有多大帮助？
+        </el-row>
+        <el-radio-group v-model="surveys[0]">
+          <el-radio v-for="(seven_v1,seven_k1) in sevenTable1" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
+        </el-radio-group>
+        
+        <el-row>
+          7. 您认为文本/可视化对解释这段程序的程度有多大？
+        </el-row>
+        <el-radio-group v-model="surveys[1]">
+          <el-radio v-for="(seven_v1,seven_k1) in sevenTable2" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
+        </el-radio-group>
+      </div>
       <el-row style="text-align:center">
           <el-button round class="trainingBtn" style="background:yellow" @click="parsePage" border><span style="color:black">Parse</span></el-button>
           <el-button round class="trainingBtn" type="success" @click="next" border><span style="color:black">Next</span></el-button>
@@ -98,8 +105,9 @@ export default {
         ["a. bailey(L3)","b. landlords(L4_1)","c. landlords(L4_2)","d. landlords(L5)","e. by_owner(L6)"],
         ["a. bailey(L3)","b. landlords(L5)","c. by_owner(L6)","d. utilities(L7)","e. ownercost(L8)"],
       ],
-      fiveTable:Array.from(new Array(5),(v,k) => k + 1),
-      surveys:new Array(1)
+      sevenTable1:Array.from(new Array(5),(v,k) => k + 1),
+      sevenTable2:Array.from(new Array(5),(v,k) => k + 1),
+      surveys:new Array(2)
     }
   },
   mounted(){
@@ -116,8 +124,10 @@ export default {
 
     this.rfuncs = rscripts[1].functions
     this.rdesc =  rscripts[1].desc
-    this.fiveTable[0] = "1(没有用处)"
-    this.fiveTable[4] = "5(非常有用)"
+    this.sevenTable1[0] = "1(没有用处)"
+    this.sevenTable1[6] = "7(非常有用)"
+    this.sevenTable2[0] = "1(没有解释清楚)"
+    this.sevenTable2[6] = "7(解释得十分清楚)"
   },
   methods:{
     getTableData(i){

@@ -54,26 +54,24 @@ wb_sort(L11): Sort rows by -breaks in wb_l(L10)<br>
                     </el-checkbox-group>
                     <br>
                 </div>
-                <div style="background:white;margin-top:20px">
-                  <el-row>
-                    <el-row>
-                      6. 您认为文本/可视化对您完成这段程序对应的问题有多大帮助？
-                    </el-row>
-                    <el-radio-group v-model="surveys[0]">
-                      <el-radio v-for="(seven_v1,seven_k1) in sevenTable" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
-                    </el-radio-group>
-                  </el-row>
-                  <el-row>
-                      <el-row>
-                        7. 您认为文本/可视化对解释这段程序的程度有多大？
-                      </el-row>
-                      <el-radio-group v-model="surveys[1]">
-                        <el-radio v-for="(seven_v1,seven_k1) in sevenTable" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
-                      </el-radio-group>
-                  </el-row>
-                </div>
+               
             </el-main>
       </el-container>
+      <div style="background:#DCDFE6;margin-bottom:30px">
+        <el-row>
+          6. 您认为文本/可视化对您完成这段程序对应的问题有多大帮助？
+        </el-row>
+        <el-radio-group v-model="surveys[0]">
+          <el-radio v-for="(seven_v1,seven_k1) in sevenTable1" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
+        </el-radio-group>
+        
+        <el-row>
+          7. 您认为文本/可视化对解释这段程序的程度有多大？
+        </el-row>
+        <el-radio-group v-model="surveys[1]">
+          <el-radio v-for="(seven_v1,seven_k1) in sevenTable2" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
+        </el-radio-group>
+      </div>
       <el-row style="text-align:center">
           <el-button round class="trainingBtn" style="background:yellow" @click="parsePage" border><span style="color:black">Parse</span></el-button>
           <el-button round class="trainingBtn" type="success" @click="next" border><span style="color:black">Next</span></el-button>
@@ -110,7 +108,8 @@ export default {
         ["a. warpbreaks(L4)","b. wb_tens(L5)","c. wb_tens(L6)","d. wb_tens(L7)","e. wb_tens_r(L9)"],
         ["a. warpbreaks(L3)","b. warpbreaks(L4)","c. wb_tens(L5)","d. wb_tens(L6)","e. wb_tens_r(L9)"],
       ],
-      sevenTable:Array.from(new Array(7),(v,k) => k + 1),
+      sevenTable1:Array.from(new Array(5),(v,k) => k + 1),
+      sevenTable2:Array.from(new Array(5),(v,k) => k + 1),
       surveys:new Array(2)
     }
   },
@@ -121,8 +120,10 @@ export default {
     }
     this.rfuncs = rscripts[0].functions
     this.rdesc =  rscripts[0].desc
-    this.sevenTable[0] = "1(没有用处)"
-    this.sevenTable[6] = "7(非常有用)"
+    this.sevenTable1[0] = "1(没有用处)"
+    this.sevenTable1[6] = "7(非常有用)"
+    this.sevenTable2[0] = "1(没有解释清楚)"
+    this.sevenTable2[6] = "7(解释得十分清楚)"
   },
   methods:{
     getTableData(i){
