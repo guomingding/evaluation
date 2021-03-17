@@ -17,8 +17,6 @@ wb_tens_r = mutate(wb_tens, rate=breaks/count)<br>
 wb_l = rbind(warpbreaks, list(70, 'A', 'L'))<br>
 wb_sort = arrange(wb_l, -breaks)<br>
             </p>
-               
-
                 <div style="height:300;display:flex;justify-content:center"> 
                   <div v-html="svgToShow" id="mainsvg" ></div>
                 </div>

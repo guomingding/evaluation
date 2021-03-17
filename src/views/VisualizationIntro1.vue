@@ -55,6 +55,8 @@
     <el-row>
       <el-button round class="el-next" type="success" @click="toTraining"><span style="color:black">Next</span></el-button>
     </el-row>
+    <div style="margin-top:30px"><a href="https://pgdw.projects.zjvis.org/static/img/arrow.5def0e8d.png" target="_blank">get arrow</a></div>
+    
   </div>
 </template>
 
