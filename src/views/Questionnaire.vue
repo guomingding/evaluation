@@ -84,8 +84,12 @@ export default {
     
       data['baseline1'] = this.$store.state.baseline1
       data['baseline2'] = this.$store.state.baseline2
+      data['baseline1_task2'] = this.$store.state.baseline1_task2
+      data['baseline2_task2'] = this.$store.state.baseline2_task2
       data['visualization1'] = this.$store.state.visualization1
       data['visualization2'] = this.$store.state.visualization2
+      data['visualization1_task1'] = this.$store.state.visualization1_task1
+      data['visualization2_task1'] = this.$store.state.visualization2_task1
       data['group'] = this.$store.state.url
       data['userInf'] = this.$store.state.userInf
 

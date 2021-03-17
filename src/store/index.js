@@ -8,8 +8,12 @@ const store = new Vuex.Store({
         userInf:{},
         baseline1:[],
         baseline2:[],
+        baseline1_task2:[],
+        baseline2_task2:[],
         visualization1:[],
         visualization2:[],
+        visualization1_task1:[],
+        visualization2_task1:[],
 
         base1Click:0,
         base2Click:0,
@@ -50,13 +54,26 @@ const store = new Vuex.Store({
         setBaseline2(state,ans2){ 
             state.baseline2 = ans2
         },
+        setBaseline1_task2(state,ans1){
+            state.baseline1_task2 = ans1
+        },
+        setBaseline2_task2(state,ans2){ 
+            state.baseline2_task2 = ans2
+        },
+
         setVisualization1(state,vis_ans1){
             state.visualization1 = vis_ans1
         },
         setVisualization2(state,vis_ans2){
             state.visualization2 = vis_ans2
         },
-
+        setVisualization1_task1(state,vis_ans1){
+            state.visualization1_task1 = vis_ans1
+        },
+        setVisualization2_task1(state,vis_ans2){
+            state.visualization2_task1 = vis_ans2
+        },
+        
         setBase1Click(state,num){
             state.base1Click = num
         },
