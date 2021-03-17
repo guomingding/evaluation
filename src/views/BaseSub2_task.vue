@@ -16,7 +16,7 @@ ownercost = left_join(landlords, utilities, by = 'OWNERNME1')<br>
 ownercost = rename(ownercost, "num_properties"="n")<br>
 ownercost = mutate(ownercost, cost_per_property=cost / num_properties)<br>
             </p>
-               
+            <h2>文本</h2>
                 <el-row style="background:white;margin-top:20px">bailey(L3): Create table from "Energy-Poverty 32641 homes.csv"<br>
 landlords(L4_1): Create n from COUNT(OWNERNME1) in bailey(L3)<br>
 landlords(L4_2): Sort rows by -n in landlords(L4_1)<br>

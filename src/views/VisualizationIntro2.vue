@@ -117,5 +117,14 @@ export default {
     text-align: left;
   }
 
-
+ .inputBox{
+    width: 100%;
+    float: left;
+    border: #878787;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 2px;
+    border-style: solid;
+  }
 </style>

@@ -26,7 +26,7 @@
         <br><br>
 
         <el-row>
-          2. 您觉得tasks中的文本和可视化相比，哪种方式解释代码会更加清楚？
+          2. 您觉得tasks中的文本和可视化相比，哪种方式解释代码的精确性会更高？
         </el-row>
         <el-radio-group v-model="answers[1]">
           <el-radio v-for="(seven_v1,seven_k1) in sevenTable2" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
@@ -63,8 +63,8 @@ export default {
   beforeMount(){
     this.sevenTable1[0] = "1(文本更有帮助)"
     this.sevenTable1[6] = "7(可视化更有帮助)"
-    this.sevenTable2[0] = "1(文本更加清楚)"
-    this.sevenTable2[6] = "7(可视化更加清楚)"
+    this.sevenTable2[0] = "1(文本精确性更高)"
+    this.sevenTable2[6] = "7(可视化精确性更高)"
   },
   methods:{
     // parsePage(){

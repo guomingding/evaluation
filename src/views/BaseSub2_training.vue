@@ -18,7 +18,7 @@ wb_tens_r = mutate(wb_tens, rate=breaks/count)<br>
 wb_l = rbind(warpbreaks, list(70, 'A', 'L'))<br>
 wb_sort = arrange(wb_l, -breaks)<br>
             </p>
-              
+            <h2>文本</h2>  
                 <el-row style="background:white;margin-top:20px">warpbreaks(L3): Create table from "warpbreaks.csv"<br>
 warpbreaks(L4): Remove duplicate rows in warpbreaks(L3)<br>
 wb_tens(L5): Rename tension to "tens" in warpbreaks(L4)<br>
