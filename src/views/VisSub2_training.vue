@@ -5,17 +5,17 @@
               <h2>R script</h2>
           </el-header>
           <el-main>
-            <p>ibrary(dplyr)<br>
-<br>
-warpbreaks = read.csv("warpbreaks.csv")<br>
-warpbreaks = unique(warpbreaks)<br>
-wb_tens = rename(warpbreaks, tens=tension)<br>
-wb_tens = group_by(wb_tens, tens)<br>
-wb_tens = mutate(wb_tens, count = n())<br>
-wb_tens = ungroup(wb_tens)<br>
-wb_tens_r = mutate(wb_tens, rate=breaks/count)<br>
-wb_l = rbind(warpbreaks, list(70, 'A', 'L'))<br>
-wb_sort = arrange(wb_l, -breaks)<br>
+            <p>1. ibrary(dplyr)<br>
+2. <br>
+3. warpbreaks = read.csv("warpbreaks.csv")<br>
+4. warpbreaks = unique(warpbreaks)<br>
+5. wb_tens = rename(warpbreaks, tens=tension)<br>
+6. wb_tens = group_by(wb_tens, tens)<br>
+7. wb_tens = mutate(wb_tens, count = n())<br>
+8. wb_tens = ungroup(wb_tens)<br>
+9. wb_tens_r = mutate(wb_tens, rate=breaks/count)<br>
+10. wb_l = rbind(warpbreaks, list(70, 'A', 'L'))<br>
+11. wb_sort = arrange(wb_l, -breaks)<br>
             </p>
                 <div style="height:300;display:flex;justify-content:center"> 
                   <div v-html="svgToShow" id="mainsvg" ></div>

@@ -5,16 +5,16 @@
               <h2>R script</h2>
           </el-header>
           <el-main>
-          <p>library(dplyr)<br>
-<br>
-bailey = read.csv("Energy-Poverty 32641 homes.csv")<br>
-landlords = dplyr::count(bailey, OWNERNME1, sort = TRUE)<br>
-landlords = subset(landlords, n>1)<br>
-by_owner = group_by(bailey, OWNERNME1)<br>
-utilities = dplyr::summarise(by_owner, cost = sum(Unit.Utilities.Cost))<br>
-ownercost = left_join(landlords, utilities, by = 'OWNERNME1')<br>
-ownercost = rename(ownercost, "num_properties"="n")<br>
-ownercost = mutate(ownercost, cost_per_property=cost / num_properties)<br>
+          <p>1. library(dplyr)<br>
+2. <br>
+3. bailey = read.csv("Energy-Poverty 32641 homes.csv")<br>
+4. landlords = dplyr::count(bailey, OWNERNME1, sort = TRUE)<br>
+5. landlords = subset(landlords, n>1)<br>
+6. by_owner = group_by(bailey, OWNERNME1)<br>
+7. utilities = dplyr::summarise(by_owner, cost = sum(Unit.Utilities.Cost))<br>
+8. ownercost = left_join(landlords, utilities, by = 'OWNERNME1')<br>
+9. ownercost = rename(ownercost, "num_properties"="n")<br>
+10. ownercost = mutate(ownercost, cost_per_property=cost / num_properties)<br>
             </p>
               
                 <!-- <el-row style="background:white;margin-top:20px">{{rdesc}}</el-row> -->
