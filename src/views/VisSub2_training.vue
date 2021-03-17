@@ -19,7 +19,7 @@ wb_sort = arrange(wb_l, -breaks)<br>
             </p>
                
 
-                <div style="height:300"> 
+                <div style="height:300;display:flex;justify-content:center"> 
                   <div v-html="svgToShow" id="mainsvg" ></div>
                 </div>
                
@@ -127,7 +127,7 @@ export default {
       maxScale: 5
     })
     panzoom.pan(10, 10)
-    panzoom.zoom(2, { animate: true })
+    panzoom.zoom(1, { animate: true })
     elem.parentElement.addEventListener('wheel', panzoom.zoomWithWheel)
 
     this.sevenTable1[0] = "1(没有用处)"

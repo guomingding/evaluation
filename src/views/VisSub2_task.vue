@@ -18,9 +18,11 @@ fy2018 = merge(fy2018, overtime.names.2018, by = 'emplid', all = T)<br>
           </p>
               
                 <!-- <el-row style="background:white;margin-top:20px">{{rdesc}}</el-row> -->
-                <div style="height:300">
+                
+                <div style="height:300;display:flex;justify-content:center">
                   <div v-html="svgToShow" id="mainsvg"></div>
                 </div>
+               
                 <div style="background:white;margin-top:20px"  v-for="(v_q,k_q) in questions" :key="v_q">
                     <el-row style="margin-bottom:10px">{{v_q}}</el-row>
                     <el-checkbox-group v-model="checkList[k_q]">
@@ -127,7 +129,7 @@ export default {
       maxScale: 10
     })
     // panzoom.pan(10, 10)
-    // panzoom.zoom(1, { animate: true })
+    // panzoom.zoom(0.8, { animate: true })
     elem.parentElement.addEventListener('wheel', panzoom.zoomWithWheel)
 
     this.sevenTable1[0] = "1(没有用处)"

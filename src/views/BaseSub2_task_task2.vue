@@ -5,16 +5,16 @@
               <h2>R script</h2>
           </el-header>
           <el-main>
-            <p>library(dplyr)<br>
-<br>
-fy2018 &lt;- read.csv('fy2018.csv')<br>
-fy_overtime = arrange(fy2018, desc(date))<br>
-fy_overtime = distinct(fy_overtime, emplid, name)<br>
-fy_overtime = group_by(fy_overtime, emplid)<br>
-fy_overtime = mutate(fy_overtime, n = row_number())<br>
-overtime.names.2018 = filter(fy_overtime, n == 1)<br>
-overtime.names.2018 = select(overtime.names.2018, emplid, name.standardized = name)<br>
-fy2018 = merge(fy2018, overtime.names.2018, by = 'emplid', all = T)<br>
+            <p>1.  library(dplyr)<br>
+2.  <br>
+3.  fy2018 &lt;- read.csv('fy2018.csv')<br>
+4.  fy_overtime = arrange(fy2018, desc(date))<br>
+5.  fy_overtime = distinct(fy_overtime, emplid, name)<br>
+6.  fy_overtime = group_by(fy_overtime, emplid)<br>
+7.  fy_overtime = mutate(fy_overtime, n = row_number())<br>
+8.  overtime.names.2018 = filter(fy_overtime, n == 1)<br>
+9.  overtime.names.2018 = select(overtime.names.2018, emplid, name.standardized = name)<br>
+10.  fy2018 = merge(fy2018, overtime.names.2018, by = 'emplid', all = T)<br>
           </p>
           <h2>文本</h2>     
                 <el-row style="background:white;margin-top:20px">fy2018(L3): Create table from "fy2018.csv"<br>

@@ -18,7 +18,7 @@ ownercost = mutate(ownercost, cost_per_property=cost / num_properties)<br>
             </p>
               
                 <!-- <el-row style="background:white;margin-top:20px">{{rdesc}}</el-row> -->
-                <div style="height:300">
+                <div style="height:300;display:flex;justify-content:center">
                   <div v-html="svgToShow" id="mainsvg"></div>
                 </div>
                 <div style="background:white;margin-top:20px"  v-for="(v_q,k_q) in questions" :key="v_q">
