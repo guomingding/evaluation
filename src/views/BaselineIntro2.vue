@@ -84,7 +84,7 @@ export default {
       selfInf['DW_Experience'] = this.DW_Experience
       this.$store.commit("setUserInf",selfInf)
       
-      this.$router.push('/base_sub2_training')
+      this.$router.push('/base_sub1_training')
     }
   },
   mounted(){

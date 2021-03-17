@@ -171,11 +171,9 @@ export default {
     },
     next(){
         // this.$router.push('/base_sub2_training')
-        if(this.$store.state.url === '/baseline_1' || this.$store.state.url === '/visualization_1'){
-            this.$router.push('/base_sub2_training')
-        }else{
-            this.$router.push('/base_sub2_task')
-        }
+
+      this.$router.push('/base_sub2_training')
+      
     },
   }
 }

@@ -5,17 +5,17 @@
               <h2>R script</h2>
           </el-header>
           <el-main>
-            <p>library(dplyr)<br>
+          <p>library(dplyr)<br>
 <br>
-fy2018 &lt;- read.csv('fy2018.csv')<br>
-fy_overtime = arrange(fy2018, desc(date))<br>
-fy_overtime = distinct(fy_overtime, emplid, name)<br>
-fy_overtime = group_by(fy_overtime, emplid)<br>
-fy_overtime = mutate(fy_overtime, n = row_number())<br>
-overtime.names.2018 = filter(fy_overtime, n == 1)<br>
-overtime.names.2018 = select(overtime.names.2018, emplid, name.standardized = name)<br>
-fy2018 = merge(fy2018, overtime.names.2018, by = 'emplid', all = T)<br>
-          </p>
+bailey = read.csv("Energy-Poverty 32641 homes.csv")<br>
+landlords = dplyr::count(bailey, OWNERNME1, sort = TRUE)<br>
+landlords = subset(landlords, n>1)<br>
+by_owner = group_by(bailey, OWNERNME1)<br>
+utilities = dplyr::summarise(by_owner, cost = sum(Unit.Utilities.Cost))<br>
+ownercost = left_join(landlords, utilities, by = 'OWNERNME1')<br>
+ownercost = rename(ownercost, "num_properties"="n")<br>
+ownercost = mutate(ownercost, cost_per_property=cost / num_properties)<br>
+            </p>
               
                 <!-- <el-row style="background:white;margin-top:20px">{{rdesc}}</el-row> -->
                 <div style="height:300">
@@ -73,33 +73,33 @@ fy2018 = merge(fy2018, overtime.names.2018, by = 'emplid', all = T)<br>
 
 <script>
 import {rscripts} from '@/assets/js/rscript'
-import {fy2018} from '@/assets/data/fy2018'
+import {Energy_Poverty} from '@/assets/data/Energy_Poverty'
 import Panzoom from '@panzoom/panzoom'
-import {sub2Svg} from '@/assets/js/vis_sub2_svg'
+import {sub2Svg} from '@/assets/js/vis_sub2_svg_task1'
 export default {
   name: 'BaseSub2_task',
   data () {
     return {
       rfuncs:{},
-      allTableData: [fy2018],
-      allTableHead: [Object.keys(fy2018[0])],
+      allTableData: [Energy_Poverty],
+      allTableHead: [Object.keys(Energy_Poverty[0])],
       tableData: [[]],
       tableHead: [[]],
       isClicked: [false],
       checkList: Array.from(new Array(5),()=>[]),
       questions:[
-        "1. overtime.names.2018(L9_1) 是否是通过 fy_overtime(L5) 做一步或多步操作得到的？",
-        "2. 从 fy_overtime(L6) 到 overtime.names.2018(L9_2)，共经历多少步数据清洗操作？",
-        "3. 从 fy_overtime(L4)  到 overtime.names.2018(L8)，新增了哪些列？",
-        "4. 从程序执行开始，以下哪些表对生成 overtime.names.2018(L8)  做了贡献？",
-        "5. 程序中哪些表多次（至少两次）作为数据清洗操作的输入表？"
+          "1. utilities(L7) 是否是通过 landlords(L5)  做一步或多步操作得到的？",
+          "2. 从bailey(L3) 到 landlords(L5)，共经历多少步数据清洗操作？",
+          "3. 从 ownercost(L8)  到 ownercost(L10)，新增了哪些列？",
+          "4. 从程序执行开始，以下哪些表对生成 utilities(L7)  做了贡献？",
+          "5. 程序中哪些表多次（至少两次）作为数据清洗操作的输入表？"
       ],
       options:[
         ["a. 是","b. 否"],
-        ["a. 2","b. 3","c. 4","d. 5"],
-        ["a. date","b. emplid","c. name","d. n","e. name.standardized"],
-        ["a. fy_overtime(L4)","b. fy_overtime(L5)","c. fy_overtime(L6)","d. fy_overtime(L7)","e. overtime.names.2018(L9_2)"],
-        ["a. fy2018(L3)","b. fy_overtime(L4)","c. fy_overtime(L6)","d. overtime.names.2018(L8)","e. overtime.names.2018(L9_1)"],
+        ["a. 1","b. 2","c. 3","d. 4"],
+        ["a. OWNERNME1","b. n","c. Unit.Utilities.Cost","d. num_properties","e. cost_per_property "],
+        ["a. bailey(L3)","b. landlords(L4_1)","c. landlords(L4_2)","d. landlords(L5)","e. by_owner(L6)"],
+        ["a. bailey(L3)","b. landlords(L5)","c. by_owner(L6)","d. utilities(L7)","e. ownercost(L8)"],
       ],
       sevenTable1:Array.from(new Array(7),(v,k) => k + 1),
       sevenTable2:Array.from(new Array(7),(v,k) => k + 1),
@@ -111,16 +111,16 @@ export default {
     this.svgToShow = sub2Svg[0]
     if(localStorage.getItem("store")){
         this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(localStorage.getItem("store"))))
-        this.startTime = this.$store.state.visualization2StartTime
-        this.clickCount = this.$store.state.vis2Click
+        this.startTime = this.$store.state.visualization2StartTime_task1
+        this.clickCount = this.$store.state.vis2Click_task1
         localStorage.removeItem("store")
     }else{
         this.clickCount = 0
         this.startTime = new Date().getTime()
-        this.$store.commit("setVisualization2StartTime",this.startTime)
+        this.$store.commit("setVisualization2StartTime_task1",this.startTime)
     }
 
-    this.rfuncs = rscripts[2].functions
+    this.rfuncs = rscripts[1].functions
   
     const elem = document.getElementById("mainsvg")
     const panzoom = Panzoom(elem, {
@@ -160,15 +160,14 @@ export default {
     },
     next(){
         let ans = {}
-        ans['visualization2_answers'] = Array.from(this.checkList)
-        ans['visualization2_duration'] = new Date().getTime() - this.$store.state.visualization2StartTime
-        ans['visualization2_click'] = this.clickCount
-        ans['visualization2_survey'] = this.surveys
+        ans['visualization2_answers_task1'] = Array.from(this.checkList)
+        ans['visualization2_duration_task1'] = new Date().getTime() - this.$store.state.visualization2StartTime_task1
+        ans['visualization2_click_task1'] = this.clickCount
+        ans['visualization2_survey_task1'] = this.surveys
 
-        console.log("ans in vis_task2",ans)
-        this.$store.commit("setVisualization2",ans)
+        this.$store.commit("setVisualization2_task1",ans)
 
-      if(this.$store.state.url === '/baseline_1'){
+      if(this.$store.state.url === '/baseline_2'){
         this.$router.push('/survey')
       }else{
         this.$router.push('/base_sub1_training')

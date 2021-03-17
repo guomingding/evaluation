@@ -164,9 +164,7 @@ export default {
         // }else{
         //     this.$router.push('/survey')
         // }
-         if(this.$store.state.url === '/baseline_2' || this.$store.state.url === '/visualization_2'){
-          this.$router.push('/base_sub1_task')
-        }else if(this.$store.state.url === '/baseline_1'){
+        if(this.$store.state.url === '/baseline_1'){
           this.$router.push('/vis_sub1_training')
         }else{
           this.$router.push('/survey')

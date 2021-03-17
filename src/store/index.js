@@ -15,6 +15,10 @@ const store = new Vuex.Store({
         base2Click:0,
         vis1Click:0,
         vis2Click:0,
+        base1Click_task2:0,
+        base2Click_task2:0,
+        vis1Click_task1:0,
+        vis2Click_task1:0,
 
         funcsSelectedInTraining:[],
         funcsSelectedInBase1:[],
@@ -28,6 +32,10 @@ const store = new Vuex.Store({
         baseline2StartTime:0,
         visualization1StartTime:0,
         visualization2StartTime:0,
+        baseline1StartTime_task2:0,
+        baseline2StartTime_task2:0,
+        visualization1StartTime_task1:0,
+        visualization2StartTime_task1:0,
     },
     mutations:{
         setUrl(state,url){
@@ -60,6 +68,18 @@ const store = new Vuex.Store({
         },
         setVis2Click(state,num){
             state.vis2Click = num
+        },
+        setBase1Click_task2(state,num){
+            state.base1Click_task2 = num
+        },
+        setBase2Click_task2(state,num){
+            state.base2Click_task2 = num
+        },
+        setVis1Click_task1(state,num){
+            state.vis1Click_task1 = num
+        },
+        setVis2Click_task1(state,num){
+            state.vis2Click_task1 = num
         },
 
         setFuncsSelectedInTraining(state,funcs){
@@ -94,7 +114,18 @@ const store = new Vuex.Store({
         setVisualization2StartTime(state,time){
             state.visualization2StartTime = time
         },
-
+        setBaseline1StartTime_task2(state,time){
+            state.baseline1StartTime_task2 = time
+        },
+        setBaseline2StartTime_task2(state,time){
+            state.baseline2StartTime_task2 = time
+        },
+        setVisualization1StartTime_task1(state,time){
+            state.visualization1StartTime_task1 = time
+        },
+        setVisualization2StartTime_task1(state,time){
+            state.visualization2StartTime_task1 = time
+        },
     }
 })
 

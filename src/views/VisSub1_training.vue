@@ -182,12 +182,8 @@ export default {
       this.$router.go(0)
     },
     next(){
-        // this.$router.push('/vis_sub2_training')
-        if(this.$store.state.url === '/baseline_1' || this.$store.state.url === '/visualization_1'){
-          this.$router.push('/vis_sub2_training')
-        }else{
-          this.$router.push('/vis_sub2_task')
-        }
+        // this.$router.push('/vis_sub2_training') 
+      this.$router.push('/vis_sub2_training')
     },
   }
 }

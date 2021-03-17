@@ -185,11 +185,11 @@ export default {
       this.isClicked[i] = true
       this.addClick()
     },
-    parsePage(){
-      this.$store.commit("setBase1Click",this.clickCount)
-      localStorage.setItem("store",JSON.stringify(this.$store.state))
-      this.$router.go(0)
-    },
+    // parsePage(){
+    //   this.$store.commit("setBase1Click",this.clickCount)
+    //   localStorage.setItem("store",JSON.stringify(this.$store.state))
+    //   this.$router.go(0)
+    // },
     next(){
         let ans = {}
         ans['baseline1_answers'] = Array.from(this.checkList)
@@ -199,13 +199,9 @@ export default {
 
         this.$store.commit("setBaseline1",ans)
         // this.$router.push('/base_sub2_task')
-        if(this.$store.state.url === '/baseline_1' || this.$store.state.url === '/visualization_1'){
-          this.$router.push('/base_sub2_task')
-        }else if(this.$store.state.url === '/baseline_2'){
-          this.$router.push('/vis_sub2_training')
-        }else{
-          this.$router.push('/survey')
-        }
+       
+        this.$router.push('/base_sub2_task')
+    
     },
     addClick(){
       this.clickCount += 1

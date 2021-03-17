@@ -75,7 +75,7 @@ export default {
     toTraining(){
       // this.$router.push('/vis_sub1_training')
      
-      this.$router.push('/vis_sub2_training')
+      this.$router.push('/vis_sub1_training')
       
     }
   },

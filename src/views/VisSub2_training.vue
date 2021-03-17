@@ -159,7 +159,7 @@ export default {
       if(this.$store.state.url === '/baseline_1' || this.$store.state.url === '/visualization_1'){
         this.$router.push('/vis_sub1_task')
       }else{
-        this.$router.push('/vis_sub1_training')
+        this.$router.push('/vis_sub1_task_task1')
       }
     },
   }

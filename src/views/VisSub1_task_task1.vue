@@ -66,13 +66,13 @@
 
 <script>
 import {rfunctions} from '@/assets/js/rfunc'
-import {beaver1} from '@/assets/data/beaver1'
-import {fish_encounters} from '@/assets/data/fish_encounters'
-import {USArrests} from '@/assets/data/USArrests'
-import {t1} from '@/assets/data/t1'
-import {t2} from '@/assets/data/t2'
-import {sleep} from '@/assets/data/sleep'
-import {sub1Svgs} from '@/assets/js/vis_sub1_svgs'
+import {starwars} from '@/assets/data/starwars'
+import {airquality} from '@/assets/data/airquality'
+import {mtcars} from '@/assets/data/mtcars'
+import {band_members} from '@/assets/data/band_members'
+import {band_instruments} from '@/assets/data/band_instruments'
+import {CO2} from '@/assets/data/CO2'
+import {sub1Svgs} from '@/assets/js/vis_sub1_svgs_task1'
 
 export default {
   name: 'VisSub1_task',
@@ -81,48 +81,49 @@ export default {
       clickCount:0,
       startTime:'',
       funcSelected:[],
-      allTableData: [[beaver1],[fish_encounters],[USArrests],[t1,t2],[sleep]],
-      allTableHead: [[Object.keys(beaver1[0])],[Object.keys(fish_encounters[0])],[Object.keys(USArrests[0])],
-        [Object.keys(t1[0]),Object.keys(t2[0])],[Object.keys(sleep[0])]],
+        allTableData: [[starwars],[airquality],[mtcars],[band_members,band_instruments],[CO2]],
+      allTableHead: [[Object.keys(starwars[0])],[Object.keys(airquality[0])],[Object.keys(mtcars[0])],
+        [Object.keys(band_members[0]),Object.keys(band_instruments[0])],[Object.keys(CO2[0])]],
       tableData: Array.from(new Array(5),()=>[]),
       tableHead: Array.from(new Array(5),()=>[]),
       isClicked: Array.from(new Array(5),()=>false),
       checkList: Array.from(new Array(5),()=>[]),
 
-      options:[
+           options:[
         [
           '该操作不会使得输入表与输出表的行数发生变化',
           '该操作不会使得输入表与输出表的列数发生变化',
-          'beaver1_distinct表中的day列不存在相同内容的单元格',
-          'beaver1_distinct表中的activ列可能存在相同内容的单元格',
+          'starwars_count表中存在eye_color列，且eye_color列可能存在重复的值',
+          'starwars_count表中不存在eye_color列',
           '以上说法都不对',
         ],
         [
           '该操作不会使得输入表与输出表的行数发生变化',
           '该操作不会使得输入表与输出表的列数发生变化',
-          'fish_encounters_filter表中的fish列的单元格内容全部大于4850',
+          'airquality_subset 表中的Temp列的单元格内容全部大于90',
           '该行代码表示筛选出符合条件的行，筛选时函数中的两个条件任意满足一个即可',
           '以上说法都不对',
         ],
         [
-          '保留了第2到4列',
-          '删除了第2到4列',
-          '删除了第2、第4行',
-          '删除了第2、第4列',
+          '该操作不会使得输入表与输出表的行数发生变化',
+          '该操作不会使得输入表与输出表的列数发生变化',
+          'mtcars_summarise表仅含有一列mean，该列中仅有一个单元格，其内容为mtcars表中disp列的均值',
+          'mtcars_summarise表相比mtcars表新增了一列mean，该列全部的单元格内容都一样，为mtcars表中disp列的均值',
           '以上说法都不对',
         ],
         [
-          'table_merge 中的行数等于 table1的行数与table2的行数之和',
-          'table_merge 中的列数等于 table1的列数与table2的列数之和',
-          'table_merge 中的country列中的任何一个单元格内容，都能在table1及table2中的country列找得到相同内容的单元格',
+          'name列为left_join的key列（连接列）',
+          'band_members和band_instruments中的列在 band_join表中都存在',
+          'band_members的name列下的所有单元格在 band_join中都存在',
+          'band_instruments的name列下的所有单元格在band_join中都存在',
           '以上说法都不对',
         ],
         [
           '该操作不会使得输入表与输出表的行数发生变化',
-          'sleep_gather表中的列数比sleep表中的列数多2列',
-          `sleep_gather表中name列里的单元格内容要么是'extra'，要么是'group'`,
-          'sleep表中的extra, group两列里的单元格内容作为了sleep_gather表中的num列里的单元格内容',
-          '以上说法都不对'
+          '该操作不会使得输入表与输出表的列数发生变化',
+          `该操作将CO2表中的uptake列按照 '.' 分隔符拆分成了int和decimal两列，且删除了uptake列`,
+          'CO2_separate表存在uptake列',
+          '以上说法都不对',
         ]
       ],
       svgsToShow:[],
@@ -136,16 +137,16 @@ export default {
     this.svgsToShow = sub1Svgs
     if(localStorage.getItem("store")){
       this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(localStorage.getItem("store"))))
-      this.startTime = this.$store.state.visualization1StartTime
+      this.startTime = this.$store.state.visualization1StartTime_task1
       this.clickCount = this.$store.state.vis1Click
       localStorage.removeItem("store")
     }else{
         this.clickCount = 0
         this.startTime = new Date().getTime()
-        this.$store.commit("setVisualization1StartTime",this.startTime)
+        this.$store.commit("setVisualization1StartTime_task1",this.startTime)
     }
 
-    for(let idx = 10;idx < 15;idx ++){
+    for(let idx = 5;idx < 10;idx ++){
       this.funcSelected.push(rfunctions[idx])
     }
 
@@ -176,15 +177,15 @@ export default {
     },
     next(){
       let ans = {}
-      ans['visualization1_answers'] = Array.from(this.checkList)
-      ans['visualization1_duration'] = new Date().getTime() - this.$store.state.visualization1StartTime
-      ans['visualization1_click'] = this.clickCount
-      ans['visualization1_survey'] = this.surveys
-      this.$store.commit("setVisualization1",ans)
+      ans['visualization1_answers_task1'] = Array.from(this.checkList)
+      ans['visualization1_duration_task1'] = new Date().getTime() - this.$store.state.visualization1StartTime_task1
+      ans['visualization1_click_task1'] = this.clickCount
+      ans['visualization1_survey_task1'] = this.surveys
+      this.$store.commit("setVisualization1_task1",ans)
       // this.$router.push('/vis_sub2_task')
-   
-      this.$router.push('/vis_sub2_task')
- 
+      
+      this.$router.push('/vis_sub2_task_task1')
+  
     },
     addCount(){
       this.clickCount += 1

@@ -5,11 +5,15 @@ import BaseSub1_training from '@/views/BaseSub1_training'
 import BaseSub2_training from '@/views/BaseSub2_training'
 import BaseSub1_task from '@/views/BaseSub1_task'
 import BaseSub2_task from '@/views/BaseSub2_task'
+import BaseSub1_task_task2 from '@/views/BaseSub1_task_task2'
+import BaseSub2_task_task2 from '@/views/BaseSub2_task_task2'
 
 import VisSub1_training from '@/views/VisSub1_training'
 import VisSub2_training from '@/views/VisSub2_training'
 import VisSub1_task from '@/views/VisSub1_task'
 import VisSub2_task from '@/views/VisSub2_task'
+import VisSub1_task_task1 from '@/views/VisSub1_task_task1'
+import VisSub2_task_task1 from '@/views/VisSub2_task_task1'
 
 import BaselineIntro1 from '@/views/BaselineIntro1'
 import BaselineIntro2 from '@/views/BaselineIntro2'
@@ -67,6 +71,16 @@ export default new Router({
       name:'BaseSub2_task',
       component:BaseSub2_task
     },
+    {
+      path:'/base_sub1_task_task2',
+      name:'BaseSub1_task',
+      component:BaseSub1_task_task2
+    },
+    {
+      path:'/base_sub2_task_task2',
+      name:'BaseSub2_task',
+      component:BaseSub2_task_task2
+    },
 
     
     {
@@ -89,6 +103,17 @@ export default new Router({
       name:'VisSub2_task',
       component:VisSub2_task
     },
+    {
+      path:'/Vis_sub1_task_task1',
+      name:'VisSub1_task',
+      component:VisSub1_task_task1
+    },
+    {
+      path:'/vis_sub2_task_task1',
+      name:'VisSub2_task',
+      component:VisSub2_task_task1
+    },
+    
     {
       path:'/survey',
       name:'Questionnaire',
