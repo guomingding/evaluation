@@ -128,7 +128,7 @@ export default {
           '以上说法都不对',
         ],
         [
-          'name列为left_join的key列（连接列）',
+          'name列为inner_join的key列（连接列）',
           'band_members和band_instruments中的列在 band_join表中都存在',
           'band_members的name列下的所有单元格在 band_join中都存在',
           'band_instruments的name列下的所有单元格在band_join中都存在',
