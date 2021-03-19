@@ -67,7 +67,6 @@ export default {
       this.$store.commit("setUserInf",selfInf)
       
       this.$router.push('/base_sub1_training')
-      
     }
   },
   mounted(){

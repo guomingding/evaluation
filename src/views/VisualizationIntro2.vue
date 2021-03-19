@@ -76,28 +76,21 @@ export default {
   methods:{
     toTraining(){
       // this.$router.push('/vis_sub1_training')
-     
+      let selfInf = {}
+      selfInf['name'] = this.name
+      selfInf['gender'] = this.gender
+      selfInf['age'] = this.age
+      selfInf['email'] = this.Email
+      selfInf['position'] = this.Position
+      selfInf['Programming_Experience'] = this.Programming_Experience
+      selfInf['DW_Experience'] = this.DW_Experience
+      this.$store.commit("setUserInf",selfInf)
+
       this.$router.push('/vis_sub1_training')
       
     }
   },
   mounted(){
-    // this.$store.commit('setUrl',this.$route.path)
-    // if(this.$route.path === '/visualization_1'){
-    //   this.$router.push('/vis_sub1_training')
-    // }else{
-    //   this.$router.push('/vis_sub2_training')
-    // }
-    let selfInf = {}
-    selfInf['name'] = this.name
-    selfInf['gender'] = this.gender
-    selfInf['age'] = this.age
-    selfInf['email'] = this.Email
-    selfInf['position'] = this.Position
-    selfInf['Programming_Experience'] = this.Programming_Experience
-    selfInf['DW_Experience'] = this.DW_Experience
-    this.$store.commit("setUserInf",selfInf)
-
     this.$store.commit('setUrl',this.$route.path)
   }
 }
