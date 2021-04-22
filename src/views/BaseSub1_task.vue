@@ -32,7 +32,7 @@
             <el-row style="background:white">{{v_q.desc}}</el-row>
             <div style="background:white;margin-top:20px">
                 <el-row style="margin-bottom:10px">1. 对于该函数所做的操作，以下说法正确的是：</el-row>
-                <el-checkbox-group v-model="checkList[k_q]">
+                <el-checkbox-group v-model="checkList[k_q]" @change="showChoice(k_q)">
                     <el-checkbox style="margin-bottom:10px; margin-left:5px;display:block" 
                       v-for="(options_v,options_k) in options[k_q]"
                       :key="options_k"
@@ -205,6 +205,9 @@ export default {
     },
     addClick(){
       this.clickCount += 1
+    },
+    showChoice(i){
+      console.log(this.checkList[i])
     }
   }
 }
