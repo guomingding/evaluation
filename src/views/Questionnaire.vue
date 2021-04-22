@@ -1,35 +1,10 @@
 <template>
   <div class="questionnaire">
-      <h1>Questionnaire</h1>
-      <p>This Vega program creates a basic bar chart. Mousing over the bars shows a tooltip with the bar value. </p>
-      
-      <p>For this task you will be asked a series of questions about the behavior of the code.
-           Please answer the questions as quickly and completely as possible. 
-           Once you have submitted an answer, you will not be able to go back and change it; 
-           if at some point you feel that one of your previous answers was wrong, 
-           please provide your new answer along with an explanation in the text box for the current question 
-           <span style="color:orange">*</span>in addition<span style="color:orange">*</span> to your answer for the current question. </p>
+      <h1>Post­-Task Survey</h1>
+      <p>你已经完成了本次实验的所有任务。根据您在完成这两个study tasks的经历，请回答以下问题：</p>
 
-        <p>You are free to interact with the Vega visualization and code visualizations as much as you would like for each question, 
-            but you cannot change the code itself. You may collapse parts of the code using the buttons in the margin. 
-            You can reset the visualization to the initial state by clicking ‘Parse’. 
-        </p>
 
-        <p>
-            You are welcome to ask any questions about the task or programming environment at this point.
-             You may continue to ask questions during the training questions. However, we cannot answer any questions once the study task has begun. 
-        </p>
-
-        <p>
-            Press ‘Start’ when you are ready to begin this task. 
-        </p>
-
-        <p>
-            Please take this opportunity to thoroughly explore all possible states or settings of the visualization.
-             When you feel you have sufficiently explored the visualization and are ready to continue to the next step, press ‘Submit’. 
-        </p>
-
-        <h3>1. What is the name of the primary dataset being visualized? </h3>
+        <!-- <h3>1. What is the name of the primary dataset being visualized? </h3>
             <p style="color:gray">school year and/or position (e.g. 2nd year PhD student, faculty, etc.)</p>
         <input type="text" class="inputBox" v-bind:disabled="!isStart" v-model="answers[0]"/> <br>
 
@@ -39,11 +14,34 @@
 
         <h3>3. What is the name of the primary dataset being visualized? </h3>
             <p style="color:gray">school year and/or position (e.g. 2nd year PhD student, faculty, etc.)</p>
-        <input type="text" class="inputBox"  v-bind:disabled="!isStart" v-model="answers[2]"/> <br> <br>
+        <input type="text" class="inputBox"  v-bind:disabled="!isStart" v-model="answers[2]"/> <br> <br> -->
+
+        <div class="answers">
+          <el-row>
+          1. 您觉得tasks中的文本和可视化相比，哪种方式对您完成这些task的帮助更大？
+        </el-row>
+        <el-radio-group v-model="answers[0]">
+          <el-radio v-for="(seven_v1,seven_k1) in sevenTable1" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
+        </el-radio-group>
+        <br><br>
 
         <el-row>
-            <!-- <el-button round class="surveyBtn" style="background-color:purple" @click="parsePage">Parse</el-button> -->
-            <el-button round class="surveyBtn" style="background-color:green" @click="submit">Submit</el-button>
+          2. 您觉得tasks中的文本和可视化相比，哪种方式解释代码的精确性会更高？
+        </el-row>
+        <el-radio-group v-model="answers[1]">
+          <el-radio v-for="(seven_v1,seven_k1) in sevenTable2" :key="seven_k1" :label="seven_k1">{{seven_v1}}</el-radio>
+        </el-radio-group>
+        <br><br>
+
+        <el-row>
+          3. 请针对可视化描述代码的方式给出您的看法或建议
+        </el-row>
+         <input type="text" class="inputBox" v-model="suggestion"/> <br> <br>
+        <br><br>
+     
+        </div>
+        <el-row>
+          <el-button round class="el-next" type="success" @click="submit"><span style="color:black">Next</span></el-button>
         </el-row>
   </div>
 </template>
@@ -54,9 +52,19 @@ export default {
   data () {
     return {
       isStart:true,
-      answers:new Array(3),
-      submitTimes:0
+      answers:new Array(2),
+      suggestion:'',
+      
+      submitTimes:0,
+      sevenTable1:Array.from(new Array(7),(v,k) => k + 1),
+      sevenTable2:Array.from(new Array(7),(v,k) => k + 1)
     }
+  },
+  beforeMount(){
+    this.sevenTable1[0] = "1(文本更有帮助)"
+    this.sevenTable1[6] = "7(可视化更有帮助)"
+    this.sevenTable2[0] = "1(文本精确性更高)"
+    this.sevenTable2[6] = "7(可视化精确性更高)"
   },
   methods:{
     // parsePage(){
@@ -64,26 +72,41 @@ export default {
     // },
     submit(){
       //只能提交一次
+      console.log("clicked")
       if(this.submitTimes !== 0){
         alert("already submitted!")
         return
       }
+
       let data = {}
       data['survey'] = this.answers
+      data["suggestion"] = this.suggestion
+    
       data['baseline1'] = this.$store.state.baseline1
       data['baseline2'] = this.$store.state.baseline2
-      data['visualization'] = this.$store.state.visualization
+      data['baseline1_task2'] = this.$store.state.baseline1_task2
+      data['baseline2_task2'] = this.$store.state.baseline2_task2
+      data['visualization1'] = this.$store.state.visualization1
+      data['visualization2'] = this.$store.state.visualization2
+      data['visualization1_task1'] = this.$store.state.visualization1_task1
+      data['visualization2_task1'] = this.$store.state.visualization2_task1
       data['group'] = this.$store.state.url
+      data['userInf'] = this.$store.state.userInf
+
       this.$axios({
         headers:{
           "Content-Type":"application/x-www-form-urlencoded;charset-utf-8"
         },
-        url:'http://localhost:80/api/getSurvey',
+        url:'/api/getSurvey',
         method:'post',
         data:this.$qs.stringify(data)
       }).then(res => {
-        alert("submit success!")
-        this.submitTimes += 1
+        if(res.data === 'True'){
+          alert("submit success!")
+          this.submitTimes += 1
+        }else{
+          alert("submit fail!")
+        }
       })
     },
   }
@@ -93,8 +116,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .questionnaire{
-    margin-left: 20%;
-    margin-right: 20%;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+
+  .answers{
+    text-align: left;
   }
   h3,p{
     text-align: left;
@@ -102,20 +129,12 @@ export default {
   .inputBox{
     width: 100%;
     float: left;
-    border: #878787; 
+    border: #878787;
     border-left-width: 0;
     border-right-width: 0;
     border-top-width: 0;
     border-bottom-width: 2px;
     border-style: solid;
-  }
-  .surveyBtn{
-    height: 2em;
-    width: 4em;
-    font-size: 1em;
-    color: white;
-    opacity: 0.7;
-    border: 1px solid white;
   }
 </style>
 

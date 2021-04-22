@@ -1,62 +1,123 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/views/HelloWorld'
-import Instrctions from '@/views/Instructions'
-import Training from '@/views/Training'
+
+import BaseSub1_training from '@/views/BaseSub1_training'
+import BaseSub2_training from '@/views/BaseSub2_training'
+import BaseSub1_task from '@/views/BaseSub1_task'
+import BaseSub2_task from '@/views/BaseSub2_task'
+import BaseSub1_task_task2 from '@/views/BaseSub1_task_task2'
+import BaseSub2_task_task2 from '@/views/BaseSub2_task_task2'
+
+import VisSub1_training from '@/views/VisSub1_training'
+import VisSub2_training from '@/views/VisSub2_training'
+import VisSub1_task from '@/views/VisSub1_task'
+import VisSub2_task from '@/views/VisSub2_task'
+import VisSub1_task_task1 from '@/views/VisSub1_task_task1'
+import VisSub2_task_task1 from '@/views/VisSub2_task_task1'
+
+import BaselineIntro1 from '@/views/BaselineIntro1'
+import BaselineIntro2 from '@/views/BaselineIntro2'
+import VisualizationIntro1 from '@/views/VisualizationIntro1'
+import VisualizationIntro2 from '@/views/VisualizationIntro2'
+
 import Questionnaire from '@/views/Questionnaire'
-import Baseline1 from '@/views/Baseline1'
-import VisualizationTraining from '@/views/VisualizationTraining'
-import Baseline2 from '@/views/Baseline2'
-import Visualization from '@/views/Visualization'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path:'/',
+      name:'BaseSub1_training',
+      component:BaseSub1_training
     },
     {
-      path: '/instructions1',
-      name: 'Ins1',
-      component: Instrctions
+      path:'/baseline_1',
+      name:'BaselineIntro1',
+      component:BaselineIntro1
     },
     {
-      path: '/instructions2',
-      name: 'Ins2',
-      component: Instrctions
+      path:'/baseline_2',
+      name:'BaselineIntro2',
+      component:BaselineIntro2
     },
     {
-      path: '/training',
-      name: 'Training',
-      component: Training
+      path:'/visualization_1',
+      name:'VisualizationIntro1',
+      component:VisualizationIntro1
     },
     {
-      path: '/survey',
-      name: 'Survey',
-      component: Questionnaire
+      path:'/visualization_2',
+      name:'VisualizationIntro2',
+      component:VisualizationIntro2
     },
     {
-      path: '/baseline1',
-      name: 'Baseline1',
-      component: Baseline1
+      path:'/base_sub1_training',
+      name:'BaseSub1_training',
+      component:BaseSub1_training
     },
     {
-      path: '/baseline2',
-      name: 'Baseline2',
-      component: Baseline2
+      path:'/base_sub2_training',
+      name:'BaseSub2_training',
+      component:BaseSub2_training
     },
     {
-      path: '/vis_training',
-      name: 'VisualizationTraining',
-      component: VisualizationTraining
+      path:'/base_sub1_task',
+      name:'BaseSub1_task',
+      component:BaseSub1_task
     },
     {
-      path: '/visualization',
-      name: 'Visualization',
-      component: Visualization
+      path:'/base_sub2_task',
+      name:'BaseSub2_task',
+      component:BaseSub2_task
+    },
+    {
+      path:'/base_sub1_task_task2',
+      name:'BaseSub1_task',
+      component:BaseSub1_task_task2
+    },
+    {
+      path:'/base_sub2_task_task2',
+      name:'BaseSub2_task',
+      component:BaseSub2_task_task2
+    },
+
+    
+    {
+      path:'/vis_sub1_training',
+      name:'VisSub1_training',
+      component:VisSub1_training
+    },
+    {
+      path:'/vis_sub2_training',
+      name:'VisSub2_training',
+      component:VisSub2_training
+    },
+    {
+      path:'/Vis_sub1_task',
+      name:'VisSub1_task',
+      component:VisSub1_task
+    },
+    {
+      path:'/vis_sub2_task',
+      name:'VisSub2_task',
+      component:VisSub2_task
+    },
+    {
+      path:'/Vis_sub1_task_task1',
+      name:'VisSub1_task',
+      component:VisSub1_task_task1
+    },
+    {
+      path:'/vis_sub2_task_task1',
+      name:'VisSub2_task',
+      component:VisSub2_task_task1
+    },
+    
+    {
+      path:'/survey',
+      name:'Questionnaire',
+      component:Questionnaire
     }
   ]
 })
